@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @buchung.status %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @buchung.start %>
+</p>
+
+<p>
+  <strong>Ende:</strong>
+  <%= @buchung.ende %>
+</p>
+
+<p>
+  <strong>Verfugbarkeit:</strong>
+  <%= @buchung.verfugbarkeit %>
+</p>
+
+<p>
+  <strong>Verfugbarkeit:</strong>
+  <%= @buchung.verfugbarkeit %>
+</p>
+
+<%= link_to 'Edit', edit_buchung_path(@buchung) %> |
+<%= link_to 'Back', buchungs_path %>

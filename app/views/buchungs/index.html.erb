@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<h1>Buchungs</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Start</th>
+      <th>Ende</th>
+      <th>Verfugbarkeit</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @buchungs.each do |buchung| %>
+      <tr>
+        <td><%= buchung.status %></td>
+        <td><%= buchung.start %></td>
+        <td><%= buchung.ende %></td>
+        <td><%= buchung.verfugbarkeit %></td>
+        <td><%= link_to 'Show', buchung %></td>
+        <td><%= link_to 'Edit', edit_buchung_path(buchung) %></td>
+        <td><%= link_to 'Destroy', buchung, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'New Buchung', new_buchung_path %>

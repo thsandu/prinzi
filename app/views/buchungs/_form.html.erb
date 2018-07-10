@@ -1,0 +1,31 @@
+<%= form_with(model: buchung, local: true) do |form| %>
+  <% if buchung.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(buchung.errors.count, "error") %> prohibited this buchung from being saved:</h2>
+      <ul>
+        <% buchung.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+  <div class="field">
+    <%= form.label :start %>
+    <%= form.datetime_select :start %>
+  </div>
+  <div class="field">
+    <%= form.label :ende %>
+    <%= form.datetime_select :ende %>
+  </div>
+  <div class="field">
+    <%= form.label :verfugbarkeit_id %>
+    <%= form.text_field :verfugbarkeit_id %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
