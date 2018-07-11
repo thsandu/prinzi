@@ -9,8 +9,6 @@ class BuchungTest < ActiveSupport::TestCase
   end
 
   def teardown
-    Buchung.delete_all
-    Verfugbarkeit.delete_all
   end
 
 
@@ -79,7 +77,6 @@ class BuchungTest < ActiveSupport::TestCase
     assert_equal ende1, verf.buchungs.first.ende
     assert_equal ende2, verf.buchungs[1].ende
 
-    puts "startdatum: #{verf.buchungs.first.start}"
   end
 
   def test_buchung_moeglich_negative
@@ -91,7 +88,6 @@ class BuchungTest < ActiveSupport::TestCase
     # assert_false verf.buchung_moeglich?(Time.mktime(2018, 03, 18, 10), Time.mktime(2018, 03, 18, 11, 59))
     # assert_false verf.buchung_moeglich?(Time.mktime(2018, 03, 18, 12), Time.mktime(2018, 03, 18, 12, 59))
     # assert_false verf.buchung_moeglich?(Time.mktime(2018, 03, 18, 12, 59), Time.mktime(2018, 03, 18, 13, 59))
-
   end
 
   def test_buchung_moeglich
@@ -105,7 +101,6 @@ class BuchungTest < ActiveSupport::TestCase
     assert verf.buchung_moeglich?(Time.mktime(2018, 03, 18, 13), Time.mktime(2018, 03, 18, 15))
     assert verf.buchung_moeglich?(Time.mktime(2018, 03, 19, 12), Time.mktime(2018, 03, 19, 13))
     assert verf.buchung_moeglich?(Time.mktime(2018, 03, 18, 13, 01), Time.mktime(2018, 03, 18, 14))
-
   end
 
   def test_buchung_kuerzen_vom_start
@@ -120,7 +115,6 @@ class BuchungTest < ActiveSupport::TestCase
     assert_equal Time.mktime(2018, 03, 18, 12, 59), verf.buchungs.first.reload.ende
     assert_equal Time.mktime(2018, 03, 18, 10), verf.buchungs[1].reload.start
     assert_equal Time.mktime(2018, 03, 18, 11, 30), verf.buchungs[1].reload.ende
-
   end
 
   def test_buchung_kuerzen_vom_ende
@@ -135,7 +129,6 @@ class BuchungTest < ActiveSupport::TestCase
     assert_equal Time.mktime(2018, 03, 18, 11, 29), verf.buchungs.first.ende
     assert_equal Time.mktime(2018, 03, 18, 11, 30), verf.buchungs[1].start
     assert_equal Time.mktime(2018, 03, 18, 13, 29), verf.buchungs[1].ende
-
   end
 
 end

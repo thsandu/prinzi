@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= verfugbarkeit.tag %></td>
+    </tr>
+    <% verfugbarkeit.buchungs.each do |buchung| %>
+      <tr>
+        <td>
+          <%= buchung.status %> von <%= buchung.start %> bis <%= buchung.ende %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
