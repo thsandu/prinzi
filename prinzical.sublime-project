@@ -1,0 +1,9 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/t_sandu/projects/prinzessin/prinzical",
+            "folder_exclude_patterns": ["tmp"]
+		}
+	]
+}

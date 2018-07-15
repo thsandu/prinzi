@@ -14,6 +14,7 @@ class BuchungsController < ApplicationController
 
   # GET /buchungs/new
   def new
+    @verfugbarkeits = Verfugbarkeit.all
     @buchung = Buchung.new
   end
 
@@ -24,7 +25,9 @@ class BuchungsController < ApplicationController
   # POST /buchungs
   # POST /buchungs.json
   def create
-    @buchung = Buchung.new(buchung_params)
+    @verfugbarkeits = Verfugbarkeit.all
+    old_verfugbarkeit = Verfugbarkeit.find(params[:verfugbarkeit_id])
+    @buchung = old_verfugbarkeit.buchungs.new(buchung_params)
 
     respond_to do |format|
       if @buchung.save
