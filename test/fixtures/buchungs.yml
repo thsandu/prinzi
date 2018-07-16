@@ -4,12 +4,9 @@ one:
   status: MyString
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35
-  verfugbarkeit: one
-  verfugbarkeit: one
+
 
 two:
   status: MyString
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35
-  verfugbarkeit: two
-  verfugbarkeit: two

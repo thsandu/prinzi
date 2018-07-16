@@ -1,5 +1,6 @@
 class BuchungsController < ApplicationController
   before_action :set_buchung, only: [:show, :edit, :update, :destroy]
+  before_action :set_verfugbarkeits
 
   # GET /buchungs
   # GET /buchungs.json
@@ -14,7 +15,6 @@ class BuchungsController < ApplicationController
 
   # GET /buchungs/new
   def new
-    @verfugbarkeits = Verfugbarkeit.all
     @buchung = Buchung.new
   end
 
@@ -25,7 +25,6 @@ class BuchungsController < ApplicationController
   # POST /buchungs
   # POST /buchungs.json
   def create
-    @verfugbarkeits = Verfugbarkeit.all
     old_verfugbarkeit = Verfugbarkeit.find(params[:verfugbarkeit_id])
     @buchung = old_verfugbarkeit.buchungs.new(buchung_params)
 
@@ -68,6 +67,10 @@ class BuchungsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_buchung
     @buchung = Buchung.find(params[:id])
+  end
+
+  def set_verfugbarkeits
+    @verfugbarkeits = Verfugbarkeit.all
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

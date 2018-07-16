@@ -56,8 +56,8 @@ class BuchungTest < ActiveSupport::TestCase
     verf.erzeuge_buchung_frei(Time.mktime(2018, 03, 18, 10, 30), Time.mktime(2018, 03, 18, 12, 30))
 
     assert_equal 1, verf.buchungs.size
-    assert_equal '08:30 UTC', verf.buchungs.first.start.strftime("%H:%M %Z")
-    assert_equal '10:30 UTC', verf.buchungs.first.ende.strftime("%H:%M %Z")
+    assert_equal '10:30 EET', verf.buchungs.first.start.strftime("%H:%M %Z")
+    assert_equal '12:30 EET', verf.buchungs.first.ende.strftime("%H:%M %Z")
   end
 
   def test_Verfugbarkeit_two_buchung_frei

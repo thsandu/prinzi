@@ -12,7 +12,7 @@
     <% verfugbarkeit.buchungs.each do |buchung| %>
       <tr>
         <td>
-          <%= buchung.status %> von <%= buchung.start.strftime("%H:%M") %> bis <%= buchung.ende.strftime("%H:%M") %>
+          <%= buchung.status %> von <%= format_date_to_hh_mm(buchung.start) %> bis <%= format_date_to_hh_mm(buchung.ende) %>
         </td>
       </tr>
     <% end %>

@@ -8,13 +8,16 @@
       </tr>
       <tr>
         <td>
-          <% @verfugbarkeits.each do |verfugbarkeit| %>
-            <%= render partial: "ereigniss_liste", locals: { verfugbarkeit: verfugbarkeit } %>
-          <% end %>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+          <div class="ereignis_frame">
+            <% @verfugbarkeits.each do |verfugbarkeit| %>
+              <%= render partial: "ereigniss_liste", locals: { verfugbarkeit: verfugbarkeit } %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
