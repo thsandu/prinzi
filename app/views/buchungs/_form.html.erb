@@ -24,7 +24,6 @@
   <div>
     <%= select_tag(:verfugbarkeit_id, options_for_select(@verfugbarkeits.map { |e| [e.tag.to_s, e.id] }) ) %>
   </div>
-  <%= debug params %>
   <div class="actions">
     <%= form.submit %>
   </div>

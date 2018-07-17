@@ -1,6 +1,6 @@
 class BuchungsController < ApplicationController
   before_action :set_buchung, only: [:show, :edit, :update, :destroy]
-  before_action :set_verfugbarkeits
+  before_action :set_verfugbarkeits, only: [:new, :edit, :update, :destroy]
 
   # GET /buchungs
   # GET /buchungs.json
