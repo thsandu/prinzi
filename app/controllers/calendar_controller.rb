@@ -25,7 +25,7 @@ class GoogleCalendar
       :redirect_uri => 'http://localhost:3000/calendar/success'
     )
 
-    # Build up the Redirecting URL
+    # Build up the Redirecting URL, nur wenn nötig
     @auth_uri = @auth_client.authorization_uri.to_s if forward
 
   end
@@ -55,6 +55,12 @@ class CalendarController < ApplicationController
   end
 
   def list_events
+    # falls der service nicht mehr initialisiert ist, geh zurück zu index und initialisiere
+    if defined?(@@service).nil? then
+      redirect_to calendar_url
+      return
+    end
+
     event_response = @@service.list_events('v0snmr43tpv6tlnpknn46g72tc@group.calendar.google.com',
                                            max_results: 10,
                                            single_events: true,
