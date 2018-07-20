@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= event.tag.strftime("%d.%m - %Y") %></td>
+    </tr>
+    <% verfugbarkeit.buchungs.each do |buchung| %>
+      <tr>
+        <td>
+          <%= buchung.status %> von <%= event.start.date_time %> bis <%= event.end.date_time %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
