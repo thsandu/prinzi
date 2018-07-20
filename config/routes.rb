@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   #shortcuts
   get 'calendar',to: 'calendar#index'
   get 'calendar/success', to: 'calendar#success'
+  get 'calendar/list_events', to: 'calendar#list_events'
+
 end

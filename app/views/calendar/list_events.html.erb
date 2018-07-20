@@ -1,0 +1,23 @@
+<h1>PrinziCal#index</h1>
+<p>Find me in app/views/prinzi_cal/index.html.erb</p>
+<p> Uhrzeit: <%= Time.zone %>: <%= Time.zone.now %>
+  <table width="80%" height="90%">
+    <tbody>
+      <tr>
+        <td><%= button_to 'Erzeuge Buchung', new_buchung_path, action: "create", method: :get %></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="ereignis_frame">
+            <% @next_events.each do |event| %>
+              <%= render partial: "ereigniss_liste", locals: { event: event } %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>

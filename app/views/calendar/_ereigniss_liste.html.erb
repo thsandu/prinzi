@@ -7,14 +7,9 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= event.tag.strftime("%d.%m - %Y") %></td>
+      <td>
+        <%= event.summary %> von <%= event.start.date_time %> bis <%= event.end.date_time %>
+      </td>
     </tr>
-    <% verfugbarkeit.buchungs.each do |buchung| %>
-      <tr>
-        <td>
-          <%= buchung.status %> von <%= event.start.date_time %> bis <%= event.end.date_time %>
-        </td>
-      </tr>
-    <% end %>
   </tbody>
 </table>

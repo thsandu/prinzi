@@ -8,25 +8,25 @@ CLIENT_SECRETS_NAME = 'client_secrets.json'
 
 class GoogleCalendar
   # Attributes Accessors (attr_writer + attr_reader)
-  attr_accessor :auth_uri
+  attr_accessor :auth_uri, :auth_client
 
-  def initialize
+  def initialize(forward)
 
     # ENV: Development
     # Google's API Credentials are in ~/config/client_secret.json
     client_secrets = Google::APIClient::ClientSecrets.load( File.join( Rails.root, 'config', 'client_secrets.json' ) )
 
-    auth_client = client_secrets.to_authorization
+    @auth_client = client_secrets.to_authorization
 
-    puts "client secrets: #{auth_client}. clientID: #{auth_client.client_id}"
+    puts "client secrets: #{@auth_client}. clientID: #{@auth_client.client_id}"
     # Specify privileges and callback URL
-    auth_client.update!(
+    @auth_client.update!(
       :scope => SCOPE,
       :redirect_uri => 'http://localhost:3000/calendar/success'
     )
 
     # Build up the Redirecting URL
-    @auth_uri = auth_client.authorization_uri.to_s
+    @auth_uri = @auth_client.authorization_uri.to_s if forward
 
   end
 
@@ -38,27 +38,29 @@ class CalendarController < ApplicationController
   def index
 
     # Redirect to Google Authorization Page
-    @cal_api = GoogleCalendar.new
-    puts "auth client initialized? #{@cal_api.auth_uri}"
-    redirect_to @cal_api.auth_uri
+    cal_api = GoogleCalendar.new(true)
+    redirect_to cal_api.auth_uri
 
   end
 
   def success
-    token_store = Google::Auth::Stores::FileTokenStore.new(file: File.join( Rails.root, 'config', CLIENT_SECRETS_NAME ))
-    client_id = Google::Auth::ClientId.from_file(File.join( Rails.root, 'config', CLIENT_SECRETS_NAME ))
-    authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
+    cal_api = GoogleCalendar.new(false)
+    cal_api.auth_client.code = succ_param[:code]
+    cal_api.auth_client.fetch_access_token!
 
-    credentials = authorizer.get_credentials_from_code(user_id: 'default', code: params[:code], base_url: 'http://localhost:3000/calendar/success')
-    puts "credentials SUCCESS: #{credentials}"
+    @@service = Google::Apis::CalendarV3::CalendarService.new
+    @@service.authorization = cal_api.auth_client
 
-    @service = Google::Apis::CalendarV3::CalendarService.new
-    @service.authorization = credentials
-    @next_events = @service.list_events('v0snmr43tpv6tlnpknn46g72tc@group.calendar.google.com',
-                                        max_results: 10,
-                                        single_events: true,
-                                        order_by: 'startTime',
-                                        time_min: Time.now.iso8601)
+    redirect_to calendar_list_events_url
+  end
+
+  def list_events
+    event_response = @@service.list_events('v0snmr43tpv6tlnpknn46g72tc@group.calendar.google.com',
+                                           max_results: 10,
+                                           single_events: true,
+                                           order_by: 'startTime',
+                                           time_min: Time.now.iso8601)
+    @next_events = event_response.items
   end
 
   # def token
@@ -73,5 +75,10 @@ class CalendarController < ApplicationController
   #   # Whichever Controller/Action needed to handle what comes next
   #   redirect_to prinzi_cal_index
   # end
+  private
+
+  def succ_param
+    params.permit(:code, :events_response)
+  end
 
 end
