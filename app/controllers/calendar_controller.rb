@@ -33,6 +33,7 @@ class GoogleCalendar
 end
 
 class CalendarController < ApplicationController
+  before_action :set_verfugbarkeits, only: [:new_buchung]
 
   # Starting action in config/routes.rb
   def index
@@ -41,6 +42,11 @@ class CalendarController < ApplicationController
     cal_api = GoogleCalendar.new(true)
     redirect_to cal_api.auth_uri
 
+  end
+
+  # GET /calendar/new_buchung
+  def new_buchung
+    @buchung = Buchung.new
   end
 
   def success
@@ -85,6 +91,10 @@ class CalendarController < ApplicationController
 
   def succ_param
     params.permit(:code, :events_response)
+  end
+
+  def set_verfugbarkeits
+    @verfugbarkeits = Verfugbarkeit.all
   end
 
 end
