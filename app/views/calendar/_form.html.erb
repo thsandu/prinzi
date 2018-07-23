@@ -1,4 +1,4 @@
-<%= form_with(model: buchung, local: true) do |form| %>
+<%= form_with(model: buchung, url: calendar_buchungs_path, local: true) do |form| %>
   <% if buchung.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(buchung.errors.count, "error") %> prohibited this buchung from being saved:</h2>
@@ -9,6 +9,7 @@
       </ul>
     </div>
   <% end %>
+  <p>bin im calendar</p>
   <div class="field">
     <%= form.label :status %>
     <%= form.text_field :status %>

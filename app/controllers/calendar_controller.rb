@@ -5,28 +5,24 @@ require 'googleauth/stores/file_token_store'
 
 SCOPE = 'https://www.googleapis.com/auth/calendar'
 CLIENT_SECRETS_NAME = 'client_secrets.json'
+CALENDAR_ID = 'v0snmr43tpv6tlnpknn46g72tc@group.calendar.google.com'
+CLIENT_SECRETS_PATH = File.join( Rails.root, 'config', CLIENT_SECRETS_NAME )
 
 class GoogleCalendar
   # Attributes Accessors (attr_writer + attr_reader)
-  attr_accessor :auth_uri, :auth_client
+  attr_accessor :authorizer, :auth_client
 
-  def initialize(forward)
+  def initialize
 
     # ENV: Development
     # Google's API Credentials are in ~/config/client_secret.json
-    client_secrets = Google::APIClient::ClientSecrets.load( File.join( Rails.root, 'config', 'client_secrets.json' ) )
+    #client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
+    client_id = '893778344541-3jcm22uhmk3h959bcp0hv0ff2t15la65.apps.googleusercontent.com'
+    token_store = Google::Auth::Stores::FileTokenStore.new(file: CLIENT_SECRETS_PATH)
+    @authorizer = Google::Auth::WebUserAuthorizer.new(client_id, SCOPE, token_store, 'http://localhost:3000/calendar/success')
 
-    @auth_client = client_secrets.to_authorization
-
-    puts "client secrets: #{@auth_client}. clientID: #{@auth_client.client_id}"
+    puts "client secrets: #{@authorizer}. clientID: #{client_id}"
     # Specify privileges and callback URL
-    @auth_client.update!(
-      :scope => SCOPE,
-      :redirect_uri => 'http://localhost:3000/calendar/success'
-    )
-
-    # Build up the Redirecting URL, nur wenn nötig
-    @auth_uri = @auth_client.authorization_uri.to_s if forward
 
   end
 
@@ -37,10 +33,13 @@ class CalendarController < ApplicationController
 
   # Starting action in config/routes.rb
   def index
-
+    logger.debug "request is set - index: #{request}"
     # Redirect to Google Authorization Page
-    cal_api = GoogleCalendar.new(true)
-    redirect_to cal_api.auth_uri
+    cal_api = GoogleCalendar.new
+
+    user_id = 'default'
+    credentials = cal_api.authorizer.get_credentials(user_id, request)
+    redirect_to cal_api.authorizer.get_authorization_url(user_id: 'default', request: request) if credentials.nil?
 
   end
 
@@ -49,25 +48,53 @@ class CalendarController < ApplicationController
     @buchung = Buchung.new
   end
 
-  def success
-    cal_api = GoogleCalendar.new(false)
-    cal_api.auth_client.code = succ_param[:code]
-    cal_api.auth_client.fetch_access_token!
+  # POST /calendar/buchungs
+  def create
+    old_verfugbarkeit = Verfugbarkeit.find(succ_param[:verfugbarkeit_id])
+    @buchung = old_verfugbarkeit.buchungs.new(succ_param[:buchung])
 
-    @@service = Google::Apis::CalendarV3::CalendarService.new
-    @@service.authorization = cal_api.auth_client
+    @@service = init_event_service
+
+    event = Google::Apis::CalendarV3::Event.new(
+      summary: "Dto Event",
+      description: "Prinzi: Ich bin FREI",
+      transparency: "transparent",
+      start: {
+        date_time: @buchung.start.strftime("%Y-%m-%dT%H:%M:%S"),
+        time_zone: 'Europe/Bucharest'
+      },
+      end: {
+        date_time: @buchung.ende.strftime("%Y-%m-%dT%H:%M:%S"),
+        time_zone: 'Europe/Bucharest'
+      }
+    )
+
+    result = @@service.insert_event(CALENDAR_ID, event)
+    puts "Event created: #{result.html_link}"
+
+    respond_to do |format|
+      if @buchung.save
+        format.html { redirect_to @buchung, notice: 'Buchung was successfully created with cal controller. Link: #{result.html_link}' }
+        format.json { render :show, status: :created, location: @buchung }
+      else
+        format.html { render :new }
+        format.json { render json: @buchung.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def success
+    logger.debug "request is set? #{request}"
+    url = Google::Auth::WebUserAuthorizer.handle_auth_callback_deferred(request)
 
     redirect_to calendar_list_events_url
   end
 
   def list_events
     # falls der service nicht mehr initialisiert ist, geh zurück zu index und initialisiere
-    if defined?(@@service).nil? then
-      redirect_to calendar_url
-      return
-    end
+    @@service = init_event_service
 
-    event_response = @@service.list_events('v0snmr43tpv6tlnpknn46g72tc@group.calendar.google.com',
+    event_response = @@service.list_events(CALENDAR_ID,
                                            max_results: 10,
                                            single_events: true,
                                            order_by: 'startTime',
@@ -75,23 +102,22 @@ class CalendarController < ApplicationController
     @next_events = event_response.items
   end
 
-  # def token
-  #   # Get a auth_client object from Google API
-  #   @google_api = GoogleCalendar.new
-
-  #   @google_api.auth_client.code = params[:code] if params[:code]
-  #   response = @google_api.auth_client.fetch_access_token!
-
-  #   session[:access_token] = response['access_token']
-
-  #   # Whichever Controller/Action needed to handle what comes next
-  #   redirect_to prinzi_cal_index
-  # end
   private
 
-  def succ_param
-    params.permit(:code, :events_response)
+  def init_event_service
+    cal_api = GoogleCalendar.new
+
+    @@service = Google::Apis::CalendarV3::CalendarService.new
+    @@service.authorization = cal_api.authorization
+    @@service
   end
+
+  def succ_param
+    #params.require(:buchung).permit!
+    #params
+    params.permit(:code, :events_response, :authenticity_token, :status, :start, :ende, :verfugbarkeit_id, buchung: {})
+  end
+
 
   def set_verfugbarkeits
     @verfugbarkeits = Verfugbarkeit.all

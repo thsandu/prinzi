@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   get 'calendar/list_events', to: 'calendar#list_events'
   get 'calendar/new_buchung', to: 'calendar#new_buchung', as: 'new_buchung_cal'
 
+  post 'calendar/buchungs', to: 'calendar#create', as: 'calendar_buchungs'
+
 end
