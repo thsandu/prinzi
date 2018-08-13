@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_20_152342) do
+ActiveRecord::Schema.define(version: 2018_08_13_091123) do
 
   create_table "buchungs", force: :cascade do |t|
     t.string "status", null: false
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2018_07_20_152342) do
     t.integer "verfugbarkeit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "gcal_uid"
+    t.string "gcal_id"
     t.index ["verfugbarkeit_id"], name: "index_buchungs_on_verfugbarkeit_id"
   end
 

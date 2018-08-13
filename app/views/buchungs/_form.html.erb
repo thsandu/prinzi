@@ -24,6 +24,10 @@
   <div>
     <%= select_tag(:verfugbarkeit_id, options_for_select(@verfugbarkeits.map { |e| [e.tag.to_s, e.id] }) ) %>
   </div>
+  <div class="field">
+    <%= form.label :gcal_id %>
+    <%= buchung.gcal_id %>
+  </div>
   <div class="actions">
     <%= form.submit %>
   </div>

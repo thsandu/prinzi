@@ -8,38 +8,22 @@ CLIENT_SECRETS_NAME = 'client_secrets.json'
 CALENDAR_ID = 'v0snmr43tpv6tlnpknn46g72tc@group.calendar.google.com'
 CLIENT_SECRETS_PATH = File.join( Rails.root, 'config', CLIENT_SECRETS_NAME )
 
-class GoogleCalendar
-  # Attributes Accessors (attr_writer + attr_reader)
-  attr_accessor :authorizer, :auth_client
-
-  def initialize
-
-    # ENV: Development
-    # Google's API Credentials are in ~/config/client_secret.json
-    #client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
-    client_id = '893778344541-3jcm22uhmk3h959bcp0hv0ff2t15la65.apps.googleusercontent.com'
-    token_store = Google::Auth::Stores::FileTokenStore.new(file: CLIENT_SECRETS_PATH)
-    @authorizer = Google::Auth::WebUserAuthorizer.new(client_id, SCOPE, token_store, 'http://localhost:3000/calendar/success')
-
-    puts "client secrets: #{@authorizer}. clientID: #{client_id}"
-    # Specify privileges and callback URL
-
-  end
-
-end
-
 class CalendarController < ApplicationController
   before_action :set_verfugbarkeits, only: [:new_buchung]
 
   # Starting action in config/routes.rb
   def index
-    logger.debug "request is set - index: #{request}"
-    # Redirect to Google Authorization Page
-    cal_api = GoogleCalendar.new
+    client = Signet::OAuth2::Client.new(client_options)
 
-    user_id = 'default'
-    credentials = cal_api.authorizer.get_credentials(user_id, request)
-    redirect_to cal_api.authorizer.get_authorization_url(user_id: 'default', request: request) if credentials.nil?
+    redirect_to client.authorization_uri.to_s
+
+    # logger.debug "request is set - index: #{request}"
+    # # Redirect to Google Authorization Page
+    # cal_api = GoogleCalendar.new
+
+    # user_id = 'default'
+    # credentials = cal_api.authorizer.get_credentials(user_id, request)
+    # redirect_to cal_api.authorizer.get_authorization_url(user_id: 'default', request: request) if credentials.nil?
 
   end
 
@@ -72,6 +56,8 @@ class CalendarController < ApplicationController
     result = @@service.insert_event(CALENDAR_ID, event)
     puts "Event created: #{result.html_link}"
 
+    @buchung.gcal_id = result.id
+
     respond_to do |format|
       if @buchung.save
         format.html { redirect_to @buchung, notice: 'Buchung was successfully created with cal controller. Link: #{result.html_link}' }
@@ -83,11 +69,38 @@ class CalendarController < ApplicationController
     end
   end
 
+  # PATCH/PUT /calendar/buchungs/1
+  # PATCH/PUT /calendar/buchungs/1.json
+  def update_buchung
+
+    @@service = init_event_service
+
+    respond_to do |format|
+      if @buchung.update(buchung_params)
+        format.html { redirect_to @buchung, notice: 'Buchung was successfully updated.' }
+        format.json { render :show, status: :ok, location: @buchung }
+      else
+        format.html { render :edit }
+        format.json { render json: @buchung.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def success
     logger.debug "request is set? #{request}"
-    url = Google::Auth::WebUserAuthorizer.handle_auth_callback_deferred(request)
+
+    client = Signet::OAuth2::Client.new(client_options)
+    client.code = succ_param[:code]
+
+    response = client.fetch_access_token!
+
+    session[:authorization] = response
 
     redirect_to calendar_list_events_url
+
+    # url = Google::Auth::WebUserAuthorizer.handle_auth_callback_deferred(request)
+
+    # redirect_to calendar_list_events_url
   end
 
   def list_events
@@ -100,15 +113,29 @@ class CalendarController < ApplicationController
                                            order_by: 'startTime',
                                            time_min: Time.now.iso8601)
     @next_events = event_response.items
+
+    Buchung.where()
   end
 
   private
 
+  def client_options
+    {
+      client_id: Rails.application.secrets.google_client_id,
+      client_secret: Rails.application.secrets.google_client_secret,
+      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+      token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+      scope: SCOPE,
+      redirect_uri: 'http://localhost:3000/calendar/success'
+    }
+  end
+
   def init_event_service
-    cal_api = GoogleCalendar.new
+    client = Signet::OAuth2::Client.new(client_options)
+    client.update!(session[:authorization])
 
     @@service = Google::Apis::CalendarV3::CalendarService.new
-    @@service.authorization = cal_api.authorization
+    @@service.authorization = client
     @@service
   end
 
