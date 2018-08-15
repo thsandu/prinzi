@@ -9,8 +9,8 @@
       <tr>
         <td>
           <div class="ereignis_frame">
-            <% @next_events.each do |event| %>
-              <%= render partial: "ereigniss_liste", locals: { event: event } %>
+            <% @next_events.each do |buchung| %>
+              <%= render partial: "ereigniss_liste_einzeln", locals: { buchung: buchung } %>
             <% end %>
           </div>
         </td>

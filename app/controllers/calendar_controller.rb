@@ -112,9 +112,14 @@ class CalendarController < ApplicationController
                                            single_events: true,
                                            order_by: 'startTime',
                                            time_min: Time.now.iso8601)
-    @next_events = event_response.items
+    events_cal = event_response.items
+    event_cald_ids = events_cal.map { |e| e.id }
+    logger.debug "event calendar IDs gefunden: #{event_cald_ids}"
+    buchungen_with_gid = Buchung.where({ gcal_id: [event_cald_ids]})
 
-    Buchung.where()
+    logger.debug "next_events sind: #{buchungen_with_gid}, size #{buchungen_with_gid.size}"
+
+    @next_events = buchungen_with_gid.to_a
   end
 
   private

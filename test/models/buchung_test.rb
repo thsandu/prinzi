@@ -131,4 +131,17 @@ class BuchungTest < ActiveSupport::TestCase
     assert_equal Time.mktime(2018, 03, 18, 13, 29), verf.buchungs[1].ende
   end
 
+  def test_find_buchung_by_gcalid
+    buchungen_with_gid = Buchung.where({ gcal_id: ['6s00hbpqq865cci7k1rndra7vo']})
+
+    event_array = (buchungen_with_gid.size > 1)
+    next_events = buchungen_with_gid.to_a
+
+    refute event_array
+    assert_equal "gcal_buchung", next_events.first.status
+
+  end
+
+
+
 end

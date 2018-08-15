@@ -36,9 +36,9 @@ class Buchung < ApplicationRecord
     status_eq = false
     start_eq = false
     ende_eq = false
-    status_eq = (this.status == other.status) if other.respond_to?(:status)
-    start_eq = (this.start == other.start) if other.respond_to?(:start)
-    ende_eq = (this.ende == other.ende) if other.respond_to?(:ende)
+    status_eq = (self.status == other.status) if other.respond_to?(:status)
+    start_eq = (self.start == other.start) if other.respond_to?(:start)
+    ende_eq = (self.ende == other.ende) if other.respond_to?(:ende)
 
     status_eq && start_eq && ende_eq
   end

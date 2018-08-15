@@ -12,3 +12,10 @@ two:
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35
   verfugbarkeit_id: 980190962
+
+three:
+  status: gcal_buchung
+  start: 2018-07-07 11:53:35
+  ende: 2018-07-07 11:53:35
+  verfugbarkeit_id: 980190962
+  gcal_id: 6s00hbpqq865cci7k1rndra7vo
