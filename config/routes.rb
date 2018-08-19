@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   get 'calendar/new_buchung', to: 'calendar#new_buchung', as: 'new_buchung_cal'
 
   post 'calendar/buchungs', to: 'calendar#create', as: 'calendar_buchungs'
-
+  post 'calendar/authorize', to: 'calendar#authorize', as: 'calendar_authorize'
+  post 'calendar/disconnect', to: 'calendar#disconnect', as: 'calendar_disconnect'
 end

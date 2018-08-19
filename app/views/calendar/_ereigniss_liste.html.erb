@@ -1,0 +1,17 @@
+<% buchungs.each do |buchung| %>
+  <table>
+    <thead>
+      <tr>
+        <th>Tag</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <%= buchung.status %> von <%= buchung.start %> bis <%= buchung.ende %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

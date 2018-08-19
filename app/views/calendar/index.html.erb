@@ -2,3 +2,21 @@
 <p>Find me in app/views/calendar/index.html.erb</p>
 <p>Google Calendar API Quickstart</p>
 <!--Add buttons to initiate auth sequence and sign out-->
+<%= form_with(scope: :post, url: calendar_authorize_path, local: true) do |form| %>
+  <div class="field">
+    <%= form.label "Google Calendar Client ID" %>
+    <input type="text" id="client_id" name="client_id" size="65" value="<%= @client_id %>" />
+  </div>
+  <div class="field">
+    <%= form.label "Google Calendar Client Secret" %>
+    <input type="text" id="client_secret" name="client_secret" size="45" value="<%= @client_secret %>" />
+  </div>
+  <div class="field">
+    <%= form.label "Google Calendar ID" %>
+    <input type="text" id="calendar_id" name="calendar_id" size="45" value="<%= @calendar_id %>" />
+  </div>
+  <div class="actions">
+    <%= form.submit 'Anmeldung Google Calendar' %>
+  </div>
+<% end %>
+<p><%= button_to 'Abmeldung Google Calendar', calendar_disconnect_path, action: "disconnect", method: :post %></p>

@@ -4,27 +4,32 @@ require 'googleauth'
 require 'googleauth/stores/file_token_store'
 
 SCOPE = 'https://www.googleapis.com/auth/calendar'
-CLIENT_SECRETS_NAME = 'client_secrets.json'
 CALENDAR_ID = 'v0snmr43tpv6tlnpknn46g72tc@group.calendar.google.com'
-CLIENT_SECRETS_PATH = File.join( Rails.root, 'config', CLIENT_SECRETS_NAME )
 
 class CalendarController < ApplicationController
   before_action :set_verfugbarkeits, only: [:new_buchung]
 
   # Starting action in config/routes.rb
   def index
-    client = Signet::OAuth2::Client.new(client_options)
+    @client_id = Rails.application.secrets.google_client_id
+    @client_secret = Rails.application.secrets.google_client_secret
+    @calendar_id = CALENDAR_ID
+  end
 
+  #POST calendar/authorize
+  def authorize
+    client = Signet::OAuth2::Client.new(client_options(params[:client_id], params[:client_secret]))
+    session[:client_id] = params[:client_id]
+    session[:client_secret] = params[:client_secret]
+    session[:calendar_id] = params[:calendar_id]
     redirect_to client.authorization_uri.to_s
+  end
 
-    # logger.debug "request is set - index: #{request}"
-    # # Redirect to Google Authorization Page
-    # cal_api = GoogleCalendar.new
+  #POST calendar/disconnect
+  def disconnect
+    puts "logout started"
 
-    # user_id = 'default'
-    # credentials = cal_api.authorizer.get_credentials(user_id, request)
-    # redirect_to cal_api.authorizer.get_authorization_url(user_id: 'default', request: request) if credentials.nil?
-
+    reset_session
   end
 
   # GET /calendar/new_buchung
@@ -53,7 +58,7 @@ class CalendarController < ApplicationController
       }
     )
 
-    result = @@service.insert_event(CALENDAR_ID, event)
+    result = @@service.insert_event(session[:calendar_id], event)
     puts "Event created: #{result.html_link}"
 
     @buchung.gcal_id = result.id
@@ -89,7 +94,7 @@ class CalendarController < ApplicationController
   def success
     logger.debug "request is set? #{request}"
 
-    client = Signet::OAuth2::Client.new(client_options)
+    client = Signet::OAuth2::Client.new(client_options(session[:client_id], session[:client_secret]))
     client.code = succ_param[:code]
 
     response = client.fetch_access_token!
@@ -107,7 +112,8 @@ class CalendarController < ApplicationController
     # falls der service nicht mehr initialisiert ist, geh zurück zu index und initialisiere
     @@service = init_event_service
 
-    event_response = @@service.list_events(CALENDAR_ID,
+    @calendar_id = session[:calendar_id]
+    event_response = @@service.list_events(@calendar_id,
                                            max_results: 10,
                                            single_events: true,
                                            order_by: 'startTime',
@@ -124,10 +130,10 @@ class CalendarController < ApplicationController
 
   private
 
-  def client_options
+  def client_options (client_id, client_secret)
     {
-      client_id: Rails.application.secrets.google_client_id,
-      client_secret: Rails.application.secrets.google_client_secret,
+      client_id: client_id,
+      client_secret: client_secret,
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
       scope: SCOPE,
@@ -136,7 +142,7 @@ class CalendarController < ApplicationController
   end
 
   def init_event_service
-    client = Signet::OAuth2::Client.new(client_options)
+    client = Signet::OAuth2::Client.new(client_options(session[:client_id], session[:client_secret]))
     client.update!(session[:authorization])
 
     @@service = Google::Apis::CalendarV3::CalendarService.new
@@ -147,9 +153,8 @@ class CalendarController < ApplicationController
   def succ_param
     #params.require(:buchung).permit!
     #params
-    params.permit(:code, :events_response, :authenticity_token, :status, :start, :ende, :verfugbarkeit_id, buchung: {})
+    params.permit(:code, :events_response, :authenticity_token, :status, :start, :ende, :verfugbarkeit_id, :client_id, :client_secret, :calendar_id, buchung: {})
   end
-
 
   def set_verfugbarkeits
     @verfugbarkeits = Verfugbarkeit.all
