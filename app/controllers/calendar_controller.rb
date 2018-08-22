@@ -39,7 +39,29 @@ class CalendarController < ApplicationController
 
   # POST /calendar/buchungs
   def create
-    old_verfugbarkeit = Verfugbarkeit.find(succ_param[:verfugbarkeit_id])
+
+    buchung_params = succ_param[:buchung]
+    logger.debug "Start hoho datum: #{buchung_params['start(1i)']}"
+
+    jahr = buchung_params['start(1i)']
+    monat = buchung_params['start(2i)']
+    tag = buchung_params['start(3i)']
+
+    verf_datum = Time.utc(jahr, monat, tag)
+
+    verf_gefunden = Verfugbarkeit.where(["tag = ?", verf_datum])
+
+    if (verf_gefunden.size == 0) then
+      logger.debug "Erzeuge neue Verfügbarkeit: #{verf_gefunden}"
+      verf_gefunden = Verfugbarkeit.new
+      verf_gefunden.tag = verf_datum
+      verf_gefunden.save!
+
+    else
+      verf_gefunden = Verfugbarkeit.find(verf_gefunden.ids.first)
+    end
+
+    old_verfugbarkeit = verf_gefunden
     @buchung = old_verfugbarkeit.buchungs.new(succ_param[:buchung])
 
     @@service = init_event_service
