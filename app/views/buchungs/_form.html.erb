@@ -10,6 +10,10 @@
     </div>
   <% end %>
   <div class="field">
+    <%= form.label :typ %>
+    <%= form.text_field :typ %>
+  </div>
+  <div class="field">
     <%= form.label :status %>
     <%= form.text_field :status %>
   </div>
@@ -20,13 +24,6 @@
   <div class="field">
     <%= form.label :ende %>
     <%= form.datetime_select :ende %>
-  </div>
-  <div>
-    <%= select_tag(:verfugbarkeit_id, options_for_select(@verfugbarkeits.map { |e| [e.tag.to_s, e.id] }) ) %>
-  </div>
-  <div class="field">
-    <%= form.label :gcal_id %>
-    <%= buchung.gcal_id %>
   </div>
   <div class="actions">
     <%= form.submit %>

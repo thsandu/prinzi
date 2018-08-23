@@ -17,7 +17,7 @@ class VerfugbarkeitsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create verfugbarkeit" do
     assert_difference('Verfugbarkeit.count') do
-      post verfugbarkeits_url, params: { verfugbarkeit: { tag: @verfugbarkeit.tag } }
+      post verfugbarkeits_url, params: { verfugbarkeit: { status: @verfugbarkeit.status, start: @verfugbarkeit.start, ende: @verfugbarkeit.ende } }
     end
 
     assert_redirected_to verfugbarkeit_url(Verfugbarkeit.last)
@@ -34,7 +34,7 @@ class VerfugbarkeitsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update verfugbarkeit" do
-    patch verfugbarkeit_url(@verfugbarkeit), params: { verfugbarkeit: { tag: @verfugbarkeit.tag } }
+    patch verfugbarkeit_url(@verfugbarkeit), params: { verfugbarkeit: { status: @verfugbarkeit.status, start: @verfugbarkeit.start, ende: @verfugbarkeit.ende} }
     assert_redirected_to verfugbarkeit_url(@verfugbarkeit)
   end
 

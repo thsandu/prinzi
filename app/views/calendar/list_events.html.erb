@@ -1,23 +1,22 @@
-<h1>PrinziCal#index</h1>
+<h1>Prinzical - Google Calendar Integration</h1>
 <p>Find me in app/views/prinzi_cal/list_events.html.erb</p>
-<p> Uhrzeit: <%= Time.zone %>: <%= Time.zone.now %>
-  <table width="80%" height="90%">
-    <tbody>
-      <tr>
-        <td><%= button_to 'Erzeuge Buchung', new_buchung_cal_path, action: "create", method: :get %></td>
-      </tr>
-      <tr>
-        <td>
-          <div class="ereignis_frame">
-            <% @next_events.each do |buchung| %>
-              <%= render partial: "ereigniss_liste_einzeln", locals: { buchung: buchung } %>
-            <% end %>
-          </div>
-        </td>
-        <td><iframe src="https://calendar.google.com/calendar/embed?src=<%= @calendar_id %>&ctz=Europe%2FBucharest" style="border: 0" width="600" height="400" frameborder="0" scrolling="no"></iframe></td>
-      </tr>
-      <tr>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
+<table width="80%" height="90%">
+  <tbody>
+    <tr>
+      <td><%= button_to 'Erzeuge Buchung', new_buchung_cal_path, action: "create", method: :get %></td>
+    </tr>
+    <tr>
+      <td>
+        <div class="ereignis_frame">
+          <% @next_events.each do |verfugbarkeit| %>
+            <%= render partial: "ereigniss_liste_einzeln", locals: { verfugbarkeit: verfugbarkeit } %>
+          <% end %>
+        </div>
+      </td>
+      <td><iframe src="https://calendar.google.com/calendar/embed?src=<%= @calendar_id %>&ctz=Europe%2FBucharest" style="border: 0" width="600" height="400" frameborder="0" scrolling="no"></iframe></td>
+    </tr>
+    <tr>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

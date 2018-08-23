@@ -34,48 +34,33 @@ class CalendarController < ApplicationController
 
   # GET /calendar/new_buchung
   def new_buchung
-    @buchung = Buchung.new
+    @verfugbarkeit = Verfugbarkeit.new
   end
 
   # POST /calendar/buchungs
   def create
 
-    buchung_params = succ_param[:buchung]
-    logger.debug "Start hoho datum: #{buchung_params['start(1i)']}"
+    verf_params = succ_param[:verfugbarkeit]
+    logger.debug "Start hoho datum: #{verf_params['start(1i)']}"
 
-    jahr = buchung_params['start(1i)']
-    monat = buchung_params['start(2i)']
-    tag = buchung_params['start(3i)']
+    jahr = verf_params['start(1i)']
+    monat = verf_params['start(2i)']
+    tag = verf_params['start(3i)']
 
-    verf_datum = Time.utc(jahr, monat, tag)
-
-    verf_gefunden = Verfugbarkeit.where(["tag = ?", verf_datum])
-
-    if (verf_gefunden.size == 0) then
-      logger.debug "Erzeuge neue Verfügbarkeit: #{verf_gefunden}"
-      verf_gefunden = Verfugbarkeit.new
-      verf_gefunden.tag = verf_datum
-      verf_gefunden.save!
-
-    else
-      verf_gefunden = Verfugbarkeit.find(verf_gefunden.ids.first)
-    end
-
-    old_verfugbarkeit = verf_gefunden
-    @buchung = old_verfugbarkeit.buchungs.new(succ_param[:buchung])
+    @verfugbarkeit = Verfugbarkeit.new(succ_param[:verfugbarkeit])
 
     @@service = init_event_service
 
     event = Google::Apis::CalendarV3::Event.new(
-      summary: "Dto Event",
+      summary: "Dto Event: #{@verfugbarkeit.status}",
       description: "Prinzi: Ich bin FREI",
       transparency: "transparent",
       start: {
-        date_time: @buchung.start.strftime("%Y-%m-%dT%H:%M:%S"),
+        date_time: @verfugbarkeit.start.strftime("%Y-%m-%dT%H:%M:%S"),
         time_zone: 'Europe/Bucharest'
       },
       end: {
-        date_time: @buchung.ende.strftime("%Y-%m-%dT%H:%M:%S"),
+        date_time: @verfugbarkeit.ende.strftime("%Y-%m-%dT%H:%M:%S"),
         time_zone: 'Europe/Bucharest'
       }
     )
@@ -83,15 +68,15 @@ class CalendarController < ApplicationController
     result = @@service.insert_event(session[:calendar_id], event)
     puts "Event created: #{result.html_link}"
 
-    @buchung.gcal_id = result.id
+    @verfugbarkeit.gcal_id = result.id
 
     respond_to do |format|
-      if @buchung.save
-        format.html { redirect_to @buchung, notice: 'Buchung was successfully created with cal controller. Link: #{result.html_link}' }
-        format.json { render :show, status: :created, location: @buchung }
+      if @verfugbarkeit.save
+        format.html { redirect_to @verfugbarkeit, notice: 'Verfügbarkeit was successfully created with cal controller. Link: #{result.html_link}' }
+        format.json { render :show, status: :created, location: @verfugbarkeit }
       else
         format.html { render :new }
-        format.json { render json: @buchung.errors, status: :unprocessable_entity }
+        format.json { render json: @verfugbarkeits.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -103,7 +88,7 @@ class CalendarController < ApplicationController
     @@service = init_event_service
 
     respond_to do |format|
-      if @buchung.update(buchung_params)
+      if @buchung.update(verf_params)
         format.html { redirect_to @buchung, notice: 'Buchung was successfully updated.' }
         format.json { render :show, status: :ok, location: @buchung }
       else
@@ -143,11 +128,11 @@ class CalendarController < ApplicationController
     events_cal = event_response.items
     event_cald_ids = events_cal.map { |e| e.id }
     logger.debug "event calendar IDs gefunden: #{event_cald_ids}"
-    buchungen_with_gid = Buchung.where({ gcal_id: [event_cald_ids]})
+    verfugbarkeit_with_gid = Verfugbarkeit.where({ gcal_id: [event_cald_ids]})
 
-    logger.debug "next_events sind: #{buchungen_with_gid}, size #{buchungen_with_gid.size}"
+    logger.debug "next_events sind: #{verfugbarkeit_with_gid}, size #{verfugbarkeit_with_gid.size}"
 
-    @next_events = buchungen_with_gid.to_a
+    @next_events = verfugbarkeit_with_gid.to_a
   end
 
   private
@@ -175,7 +160,7 @@ class CalendarController < ApplicationController
   def succ_param
     #params.require(:buchung).permit!
     #params
-    params.permit(:code, :events_response, :authenticity_token, :status, :start, :ende, :verfugbarkeit_id, :client_id, :client_secret, :calendar_id, buchung: {})
+    params.permit(:code, :events_response, :authenticity_token, :status, :start, :ende, :verfugbarkeit_id, :client_id, :client_secret, :calendar_id, verfugbarkeit: {})
   end
 
   def set_verfugbarkeits

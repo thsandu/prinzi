@@ -2,20 +2,33 @@
   <% if verfugbarkeit.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(verfugbarkeit.errors.count, "error") %> prohibited this verfugbarkeit from being saved:</h2>
-
       <ul>
-      <% verfugbarkeit.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% verfugbarkeit.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :tag %>
     <%= form.datetime_select :tag %>
   </div>
-
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+  <div class="field">
+    <%= form.label :start %>
+    <%= form.datetime_select :start %>
+  </div>
+  <div class="field">
+    <%= form.label :ende %>
+    <%= form.datetime_select :ende %>
+  </div>
+  <div class="field">
+    <%= form.label :gcal_id %>
+    <%= form.text_field :gcal_id %>
+  </div>
   <div class="actions">
     <%= form.submit %>
   </div>

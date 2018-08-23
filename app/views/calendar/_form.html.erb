@@ -1,9 +1,9 @@
-<%= form_with(model: buchung, url: calendar_buchungs_path, local: true) do |form| %>
-  <% if buchung.errors.any? %>
+<%= form_with(model: verfugbarkeit, url: calendar_verfugbarkeits_path, local: true) do |form| %>
+  <% if verfugbarkeit.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(buchung.errors.count, "error") %> prohibited this buchung from being saved:</h2>
+      <h2><%= pluralize(verfugbarkeit.errors.count, "error") %> prohibited this verfugbarkeit from being saved:</h2>
       <ul>
-        <% buchung.errors.full_messages.each do |message| %>
+        <% verfugbarkeit.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -21,9 +21,6 @@
   <div class="field">
     <%= form.label :ende %>
     <%= form.datetime_select :ende %>
-  </div>
-  <div>
-    <%= select_tag(:verfugbarkeit_id, options_for_select(@verfugbarkeits.map { |e| [e.tag.to_s, e.id] }) ) %>
   </div>
   <div class="actions">
     <%= form.submit %>

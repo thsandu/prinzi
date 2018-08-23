@@ -1,9 +1,19 @@
 <p id="notice"><%= notice %></p>
-
 <p>
-  <strong>Tag:</strong>
-  <%= @verfugbarkeit.tag %>
+  <strong>Status:</strong>
+  <%= @verfugbarkeit.status %>
 </p>
-
+<p>
+  <strong>Start:</strong>
+  <%= @verfugbarkeit.start %>
+</p>
+<p>
+  <strong>Ende:</strong>
+  <%= @verfugbarkeit.ende %>
+</p>
+<p>
+  <strong>Google Calendar ID:</strong>
+  <%= @verfugbarkeit.gcal_id %>
+</p>
 <%= link_to 'Edit', edit_verfugbarkeit_path(@verfugbarkeit) %> |
 <%= link_to 'Back', verfugbarkeits_path %>

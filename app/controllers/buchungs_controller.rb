@@ -1,6 +1,5 @@
 class BuchungsController < ApplicationController
   before_action :set_buchung, only: [:show, :edit, :update, :destroy]
-  before_action :set_verfugbarkeits, only: [:new, :edit, :update, :destroy]
 
   # GET /buchungs
   # GET /buchungs.json
@@ -25,8 +24,6 @@ class BuchungsController < ApplicationController
   # POST /buchungs
   # POST /buchungs.json
   def create
-    old_verfugbarkeit = Verfugbarkeit.find(params[:verfugbarkeit_id])
-    @buchung = old_verfugbarkeit.buchungs.new(buchung_params)
 
     respond_to do |format|
       if @buchung.save
@@ -75,6 +72,6 @@ class BuchungsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def buchung_params
-    params.require(:buchung).permit(:status, :start, :ende, :verfugbarkeit_id)
+    params.require(:buchung).permit(:status, :start, :ende, :typ)
   end
 end

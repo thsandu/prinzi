@@ -18,7 +18,7 @@ class BuchungsControllerTest < ActionDispatch::IntegrationTest
   test "should create buchung" do
     assert_difference('Buchung.count') do
       verf_id = verfugbarkeits(:one).id
-      post buchungs_url, params: {buchung: { ende: @buchung.ende, start: @buchung.start, status: @buchung.status }, verfugbarkeit_id: verf_id }
+      post buchungs_url, params: {buchung: { ende: @buchung.ende, start: @buchung.start, status: @buchung.status, typ: @buchung.typ } }
     end
 
     assert_redirected_to buchung_url(Buchung.last)
@@ -35,8 +35,7 @@ class BuchungsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update buchung" do
-    verf_id = verfugbarkeits(:one).id
-    patch buchung_url(@buchung), params: { buchung: { ende: @buchung.ende, start: @buchung.start, status: @buchung.status }, verfugbarkeit_id: verf_id  }
+    patch buchung_url(@buchung), params: { buchung: { ende: @buchung.ende, start: @buchung.start, status: @buchung.status, typ: @buchung.typ }  }
     assert_redirected_to buchung_url(@buchung)
   end
 

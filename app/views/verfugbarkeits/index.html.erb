@@ -1,7 +1,5 @@
 <p id="notice"><%= notice %></p>
-
 <h1>Verfugbarkeits</h1>
-
 <table>
   <thead>
     <tr>
@@ -9,11 +7,12 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @verfugbarkeits.each do |verfugbarkeit| %>
       <tr>
-        <td><%= verfugbarkeit.tag %></td>
+        <td><%= verfugbarkeit.status %></td>
+        <td><%= verfugbarkeit.start %></td>
+        <td><%= verfugbarkeit.ende %></td>
         <td><%= link_to 'Show', verfugbarkeit %></td>
         <td><%= link_to 'Edit', edit_verfugbarkeit_path(verfugbarkeit) %></td>
         <td><%= link_to 'Destroy', verfugbarkeit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -21,7 +20,5 @@
     <% end %>
   </tbody>
 </table>
-
 <br>
-
 <%= link_to 'New Verfugbarkeit', new_verfugbarkeit_path %>

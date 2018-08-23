@@ -1,7 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  tag: 2018-07-07 00:00:00
+  status: fragen
+  start: 2018-07-07 11:53:35
+  ende: 2018-07-07 13:53:35
 
 two:
-  tag: 2018-08-09
+  status: verfügbar
+  start: 2018-07-07 16:53:35
+  ende: 2018-07-07 17:53:35
+  gcal_id: 6s00hbpqq865cci7k1rndra7vo

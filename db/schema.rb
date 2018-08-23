@@ -10,23 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_13_091123) do
+ActiveRecord::Schema.define(version: 2018_08_23_110554) do
 
   create_table "buchungs", force: :cascade do |t|
     t.string "status", null: false
     t.datetime "start", null: false
     t.datetime "ende", null: false
-    t.integer "verfugbarkeit_id"
+    t.string "typ", default: "standard", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "gcal_id"
-    t.index ["verfugbarkeit_id"], name: "index_buchungs_on_verfugbarkeit_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "typ"
+    t.string "name"
+    t.string "username"
+    t.string "password_digest"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "verfugbarkeits", force: :cascade do |t|
-    t.datetime "tag", null: false
+    t.datetime "start", default: "2018-08-23 07:59:15", null: false
+    t.datetime "ende", default: "2018-08-23 07:59:15", null: false
+    t.string "status", default: "verfügbar", null: false
+    t.integer "user_id"
+    t.string "gcal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_verfugbarkeits_on_user_id"
   end
 
 end
