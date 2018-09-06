@@ -1,0 +1,9 @@
+<h1>Willkommen lieber Admin</h1>
+Uhrzeit: <%= Time.now %>
+Anzahl Verfügbarkeiten: <%= @verfugbarkeiten_anzahl %>
+Anzahl User: <%= @user_anzahl %>
+<p>Find me in app/views/admin/index.html.erb</p>
+<% if notice %>
+  <p id = "notice"><%= notice %></p>
+<% end %>
+<div><%= button_to 'Logout', logout_url, method: :get %></div>

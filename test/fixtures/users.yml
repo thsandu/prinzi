@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  typ: MyString
+admin_user:
+  typ: Administrator
   name: MyString
-  username: MyString
-  password_digest: <%= BCrypt::Password.create('secret') %>
+  username: admin
+  password_digest: <%= BCrypt::Password.create('admin') %>
   email: MyString
 
-two:
-  typ: MyString
-  name: MyString
-  username: MyString
-  password_digest: <%= BCrypt::Password.create('secret') %>
+jutta_user:
+  typ: Mitarbeiter
+  name: Tester Name
+  username: jutta
+  password_digest: <%= BCrypt::Password.create('jutta') %>
   email: MyString

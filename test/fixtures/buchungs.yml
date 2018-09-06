@@ -2,18 +2,18 @@
 
 one:
   status: MyString
-  typ: verfügbar
+  typ: standard
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35
 
 two:
   status: MyString
-  typ: verfügbar
+  typ: royale
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35
 
 three:
   status: gcal_buchung
-  typ: verfügbar
+  typ: allinclusive
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35

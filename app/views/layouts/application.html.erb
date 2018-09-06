@@ -4,12 +4,35 @@
     <title>Prinzical</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <%= yield %>
+    <div id="columns">
+      <div id="side">
+        <% if @user %>
+          <p> User <%= @user.username %> eingeloggt.</p>
+          <p><%= button_to 'Logout', logout_url, method: :get %></p>
+        <% end %>
+        <% if @user && @user.is_admin? %>
+          <ul>
+            <li><%= link_to users_path, method: :get %></li>
+            <li><%= link_to verfugbarkeits_path, method: :get %></li>
+          </ul>
+        <% end %>
+        <ul>
+          <li><a href="http://www....">Home</a></li>
+          <li><a href="http://www..../faq">Questions</a></li>
+          <li><a href="http://www..../news">News</a></li>
+          <li><a href="http://www..../contact">Contact</a></li>
+        </ul>
+        <p>
+          <span class="date"><%= Time.new %></span>
+        </p>
+      </div>
+      <div id="main">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

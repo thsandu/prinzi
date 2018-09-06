@@ -1,20 +1,18 @@
-<table>
-  <thead>
-    <tr>
-      <th>Tag</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= verfugbarkeit.tag.strftime("%d.%m - %Y") %></td>
-    </tr>
-    <% verfugbarkeit.buchungs.each do |buchung| %>
+<div class="ereignisse">
+  <table>
+    <thead>
+      <tr>
+        <th>Tag</th>
+      </tr>
+    </thead>
+    <tbody>
       <tr>
         <td>
-          <%= buchung.status %> von <%= format_date_to_hh_mm(buchung.start) %> bis <%= format_date_to_hh_mm(buchung.ende) %>
+          <%= verfugbarkeit.status %> <br/>
+          von: <%= verfugbarkeit.start %> <br/>
+          bis: <%= verfugbarkeit.ende %>
         </td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

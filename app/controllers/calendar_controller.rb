@@ -18,11 +18,11 @@ class CalendarController < ApplicationController
 
   #POST calendar/authorize
   def authorize
-    client = Signet::OAuth2::Client.new(client_options(params[:client_id], params[:client_secret]))
-    session[:client_id] = params[:client_id]
-    session[:client_secret] = params[:client_secret]
-    session[:calendar_id] = params[:calendar_id]
-    redirect_to client.authorization_uri.to_s
+    # client = Signet::OAuth2::Client.new(client_options(params[:client_id], params[:client_secret]))
+    # session[:client_id] = params[:client_id]
+    # session[:client_secret] = params[:client_secret]
+    # session[:calendar_id] = params[:calendar_id]
+    # redirect_to client.authorization_uri.to_s
   end
 
   #POST calendar/disconnect
@@ -36,6 +36,7 @@ class CalendarController < ApplicationController
   def new_buchung
     @verfugbarkeit = Verfugbarkeit.new
   end
+
 
   # POST /calendar/buchungs
   def create
@@ -80,6 +81,7 @@ class CalendarController < ApplicationController
       end
     end
   end
+
 
   # PATCH/PUT /calendar/buchungs/1
   # PATCH/PUT /calendar/buchungs/1.json
