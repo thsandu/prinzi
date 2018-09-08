@@ -24,7 +24,6 @@ class BuchungsController < ApplicationController
   # POST /buchungs
   # POST /buchungs.json
   def create
-
     respond_to do |format|
       if @buchung.save
         format.html { redirect_to @buchung, notice: 'Buchung was successfully created.' }

@@ -3,6 +3,10 @@ require 'test_helper'
 class VerfugbarkeitTest < ActiveSupport::TestCase
   fixtures :verfugbarkeits
 
+  def setup
+    puts "Do nothing!!!"
+  end
+
   test "test_find_verfugbarkeit_by_gcalid" do
     buchungen_with_gid = Verfugbarkeit.where({ gcal_id: ['6s00hbpqq865cci7k1rndra7vo']})
 
