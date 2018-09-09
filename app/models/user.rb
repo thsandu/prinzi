@@ -3,8 +3,6 @@ class User < ApplicationRecord
   has_secure_password
 
   def is_admin?
-    puts "typ ist: #{@typ}"
-    puts "result ist: #{@typ == 'Administrator'}"
     @typ == 'Administrator'
   end
 

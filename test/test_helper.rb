@@ -17,7 +17,6 @@ class ActiveSupport::TestCase
   end
 
   def setup
-    puts "login now"
     login_as users(:jutta_user)
   end
 
