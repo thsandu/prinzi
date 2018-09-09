@@ -2,8 +2,78 @@
 Uhrzeit: <%= Time.now %>
 Anzahl Verfügbarkeiten: <%= @verfugbarkeiten_anzahl %>
 Anzahl User: <%= @user_anzahl %>
+KW 36 ist: <%= week_dates(36) %>
 <p>Find me in app/views/admin/index.html.erb</p>
 <% if notice %>
   <p id = "notice"><%= notice %></p>
 <% end %>
-<div><%= button_to 'Logout', logout_url, method: :get %></div>
+<div class="adminwoche">
+  <div class="titel">Name</div>
+  <div class="titel">Mo</div>
+  <div class="titel">Di</div>
+  <div class="titel">Mi</div>
+  <div class="titel">Do</div>
+  <div class="titel">Fr</div>
+  <div class="titel">Sa</div>
+  <div class="titel">So</div>
+  <div class="person">Paula</div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-17</div>
+    <div class="fragen">17-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="fragen">12-15</div>
+    <div class="abwesend">15-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="fragen">12-19</div>
+  </div>
+  <div class="person">Sabine</div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+  <div class="verfügbarkeit">
+    <div class="verfügbar">09-11</div>
+    <div class="abwesend">12-19</div>
+  </div>
+</div>

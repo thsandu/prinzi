@@ -1,3 +1,28 @@
 // Place all the styles related to the Admin controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.adminwoche {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  border: 1px solid black;
+  .titel {
+  	border: 0.5px solid black;
+  	text-align: center;
+  }
+  .verfügbarkeit {
+  	border: 0.5px solid black
+  }
+  .person {
+  	border: 0.5px solid black
+  }
+  .verfügbar {
+  	color: green;
+  }
+  .abwesend {
+  	color: red;
+  }
+  .fragen {
+  	color: grey;
+  }
+}
