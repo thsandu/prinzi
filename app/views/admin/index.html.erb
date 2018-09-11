@@ -9,13 +9,13 @@ KW 36 ist: <%= week_dates(36) %>
 <% end %>
 <div class="adminwoche">
   <div class="titel">Name</div>
-  <div class="titel">Mo</div>
-  <div class="titel">Di</div>
-  <div class="titel">Mi</div>
-  <div class="titel">Do</div>
-  <div class="titel">Fr</div>
-  <div class="titel">Sa</div>
-  <div class="titel">So</div>
+  <div class="titel">Mo <%= @wochen_datums[0]%></div>
+  <div class="titel">Di <%= @wochen_datums[1]%></div>
+  <div class="titel">Mi <%= @wochen_datums[2]%></div>
+  <div class="titel">Do <%= @wochen_datums[3]%></div>
+  <div class="titel">Fr <%= @wochen_datums[4]%></div>
+  <div class="titel">Sa <%= @wochen_datums[5]%></div>
+  <div class="titel">So <%= @wochen_datums[6]%></div>
   <div class="person">Paula</div>
   <div class="verfügbarkeit">
     <div class="verfügbar">09-11</div>

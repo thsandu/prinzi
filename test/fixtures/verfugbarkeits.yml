@@ -10,3 +10,33 @@ two:
   start: 2018-07-07 16:53:35
   ende: 2018-07-07 17:53:35
   gcal_id: 6s00hbpqq865cci7k1rndra7vo
+
+jutta_1:
+  status: verfügbar
+  start: <%= Time.mktime(2018, 8, 7, 9) %>
+  ende: <%= Time.mktime(2018, 8, 7, 11) %>
+  user_id: 42
+
+jutta_2:
+  status: verfügbar
+  start: <%= Time.mktime(2018, 8, 7, 11) %>
+  ende: <%= Time.mktime(2018, 8, 7, 12) %>
+  user_id: 42
+
+jutta_3:
+  status: abwesend
+  start: <%= Time.mktime(2018, 8, 7, 12) %>
+  ende: <%= Time.mktime(2018, 8, 7, 18) %>
+  user_id: 42
+
+jutta_4:
+  status: fragen
+  start: <%= Time.mktime(2018, 8, 7, 18) %>
+  ende: <%= Time.mktime(2018, 8, 7, 19) %>
+  user_id: 42
+
+jutta_5:
+  status: verfügbar
+  start: <%= Time.mktime(2018, 8, 8, 9) %>
+  ende: 2018-07-08 19:00:00
+  user_id: 42
