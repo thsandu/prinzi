@@ -62,13 +62,13 @@ class VerfugbarkeitsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_verfugbarkeit
-      @verfugbarkeit = Verfugbarkeit.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_verfugbarkeit
+    @verfugbarkeit = Verfugbarkeit.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def verfugbarkeit_params
-      params.require(:verfugbarkeit).permit(:tag)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def verfugbarkeit_params
+    params.require(:verfugbarkeit).permit(:status, :start, :ende)
+  end
 end

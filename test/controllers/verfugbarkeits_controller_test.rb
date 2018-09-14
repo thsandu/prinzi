@@ -3,6 +3,7 @@ require 'test_helper'
 class VerfugbarkeitsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @verfugbarkeit = verfugbarkeits(:one)
+    @verfugbarkeit_change = verfugbarkeits(:two)
   end
 
   test "should get index" do
@@ -34,8 +35,14 @@ class VerfugbarkeitsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update verfugbarkeit" do
-    patch verfugbarkeit_url(@verfugbarkeit), params: { verfugbarkeit: { status: @verfugbarkeit.status, start: @verfugbarkeit.start, ende: @verfugbarkeit.ende} }
+    patch verfugbarkeit_url(@verfugbarkeit), params: { verfugbarkeit: { status: @verfugbarkeit_change.status, start: @verfugbarkeit_change.start, ende: @verfugbarkeit_change.ende} }
     assert_redirected_to verfugbarkeit_url(@verfugbarkeit)
+
+    @verfugbarkeit.reload
+    assert_equal @verfugbarkeit_change.status, @verfugbarkeit.status
+    assert_equal @verfugbarkeit_change.start, @verfugbarkeit.start
+    assert_equal @verfugbarkeit_change.ende, @verfugbarkeit.ende
+
   end
 
   test "should destroy verfugbarkeit" do

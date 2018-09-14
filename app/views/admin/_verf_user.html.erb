@@ -1,32 +1,9 @@
 <div class="person"><%= "Nutzer: #{mitarbeiter.username}" %><br/>
   <%= "Name: #{mitarbeiter.name}" %></div>
-<div class="verfügbarkeit">
-  <div class="verfügbar">09-11</div>
-  <div class="abwesend">12-19</div>
-</div>
-<div class="verfügbarkeit">
-  <div class="verfügbar">09-11</div>
-  <div class="abwesend">12-17</div>
-  <div class="fragen">17-19</div>
-</div>
-<div class="verfügbarkeit">
-  <div class="verfügbar">09-11</div>
-  <div class="abwesend">12-19</div>
-</div>
-<div class="verfügbarkeit">
-  <div class="verfügbar">09-11</div>
-  <div class="abwesend">12-19</div>
-</div>
-<div class="verfügbarkeit">
-  <div class="verfügbar">09-11</div>
-  <div class="abwesend">12-19</div>
-</div>
-<div class="verfügbarkeit">
-  <div class="verfügbar">09-11</div>
-  <div class="fragen">12-15</div>
-  <div class="abwesend">15-19</div>
-</div>
-<div class="verfügbarkeit">
-  <div class="verfügbar">09-11</div>
-  <div class="fragen">12-19</div>
-</div>
+<% verfugbarkeiten.each do |verf| %>
+  <div class="verfügbarkeit">
+    <div class="verfügbar"><%= verf[:verfügbar] %></div>
+    <div class="abwesend"><%= verf[:abwesend] %></div>
+    <div class="fragen"><%= verf[:fragen] %></div>
+  </div>
+<% end %>
