@@ -16,9 +16,9 @@ ActiveRecord::Schema.define(version: 2018_08_23_110554) do
     t.string "status", null: false
     t.datetime "start", null: false
     t.datetime "ende", null: false
-    t.string "typ", default: "standard", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "typ", default: "standard", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -32,13 +32,13 @@ ActiveRecord::Schema.define(version: 2018_08_23_110554) do
   end
 
   create_table "verfugbarkeits", force: :cascade do |t|
-    t.datetime "start", default: "2018-08-23 07:59:15", null: false
-    t.datetime "ende", default: "2018-08-23 07:59:15", null: false
-    t.string "status", default: "verfügbar", null: false
-    t.integer "user_id"
-    t.string "gcal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "verfügbar", null: false
+    t.datetime "start", default: "2018-09-17 04:19:30", null: false
+    t.datetime "ende", default: "2018-09-17 04:19:30", null: false
+    t.integer "user_id"
+    t.string "gcal_id"
     t.index ["user_id"], name: "index_verfugbarkeits_on_user_id"
   end
 
