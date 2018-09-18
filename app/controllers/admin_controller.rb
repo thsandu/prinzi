@@ -3,10 +3,13 @@ class AdminController < ApplicationController
   before_action :check_admin
 
   def index
+    @kal_woche = Time.now.to_date.cweek
+    @kal_woche = params[:woche] unless params[:woche].nil?
+
     @verfugbarkeiten_anzahl = Verfugbarkeit.count
     @user_anzahl = User.count
     @wochen_auslastung = {}
-    @wochen_datums = finde_mo_bis_so_datum(Time.now.to_date.cweek)
+    @wochen_datums = finde_mo_bis_so_datum(@kal_woche)
     @alle_user = User.where(typ: "Mitarbeiter").order(:username)
 
     @alle_user.each do |user|
@@ -21,8 +24,8 @@ class AdminController < ApplicationController
 
   end
 
-  def zeige_verf_kw(kalender_woche, user)
-    Verfugbarkeit.where({user_id: user.id})
+  def admin_params
+    #params.permit(:woche)
   end
 
   protected

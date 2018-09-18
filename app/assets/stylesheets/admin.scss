@@ -5,7 +5,17 @@
 .adminwoche {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  border: 1px solid black;
+
+  .navi_zurück {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    text-align: left;
+  }
+  .navi_vor {
+    grid-column-start: 6;
+    grid-column-end: 9;
+    text-align: right;
+  }
   .titel {
   	border: 0.5px solid black;
   	text-align: center;

@@ -2,12 +2,14 @@
 Uhrzeit: <%= Time.now %>
 Anzahl Verfügbarkeiten: <%= @verfugbarkeiten_anzahl %>
 Anzahl User: <%= @user_anzahl %>
-KW 36 ist: <%= week_dates(36) %>
+KW <%= @kal_woche %> ist: <%= week_dates(@kal_woche) %>
 <p>Find me in app/views/admin/index.html.erb</p>
 <% if notice %>
   <p id = "notice"><%= notice %></p>
 <% end %>
 <div class="adminwoche">
+  <div class="navi_zurück"><%= link_to '<< Vorherige Woche', admin_path(woche: "#{@kal_woche.to_i - 1}"), method: :get %></div>
+  <div class="navi_vor"><%= link_to 'Nächste Woche >>', admin_path(woche: "#{@kal_woche.to_i + 1}"), method: :get %></div>
   <div class="titel">Name</div>
   <div class="titel">Mo <%= @wochen_datums[0]%></div>
   <div class="titel">Di <%= @wochen_datums[1]%></div>
