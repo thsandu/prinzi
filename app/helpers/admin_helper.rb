@@ -10,4 +10,19 @@ module AdminHelper
     week_start.strftime( "%m/%d/%y" ) + ' - ' + week_end.strftime(
     "%m/%d/%y" )
   end
+
+  # array von intervallen ["11 - 13", "15 - 17"]
+  def print_verfugbar_zeiten(verfugbar_zeiten)
+    result = nil
+    verfugbar_zeiten.each do |intervall|
+      unless result.nil?
+      then
+        result.concat ", #{intervall}"
+      else
+        result = intervall
+      end
+    end
+    result
+  end
+
 end

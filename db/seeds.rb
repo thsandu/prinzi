@@ -16,9 +16,13 @@ sophia = User.create(typ: "Mitarbeiter", name: "Sophia", username: "sophia", pas
 
 seed = 115032730400174366788466674494640623225
 seed2 = 115032730400174366788466674494640623355
+seed3 = 115032730400174366788466674494640625454
+seed4 = 115032730400174366788466674494640699883
+
+woche_jetzt = Time.now.to_date.cweek
 
 zeiten = SeedHelper.generate_zeiten(seed)
-tage = SeedHelper.finde_mo_bis_so_datum(Time.now.to_date.cweek)
+tage = SeedHelper.finde_mo_bis_so_datum(woche_jetzt)
 
 
 puts "zeiten: #{zeiten}"
@@ -29,3 +33,16 @@ SeedHelper.create_verfugbarkeiten(tage, zeiten, paula)
 zeiten = SeedHelper.generate_zeiten(seed2)
 
 SeedHelper.create_verfugbarkeiten(tage, zeiten, sophia)
+
+tage = SeedHelper.finde_mo_bis_so_datum(woche_jetzt + 1)
+zeiten = SeedHelper.generate_zeiten(seed3)
+
+puts "zeiten: #{zeiten}"
+puts "tage: #{tage}"
+SeedHelper.create_verfugbarkeiten(tage, zeiten, paula)
+
+zeiten = SeedHelper.generate_zeiten(seed4)
+SeedHelper.create_verfugbarkeiten(tage, zeiten, sophia)
+
+puts "zeiten: #{zeiten}"
+puts "tage: #{tage}"

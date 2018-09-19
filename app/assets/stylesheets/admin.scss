@@ -21,18 +21,23 @@
   	text-align: center;
   }
   .verfügbarkeit {
-  	border: 0.5px solid black
+  	border: 0.5px solid black;
+
+      .verfügbar {
+        color: green;
+      }
+       .verfügbar_buchung {
+        color: green;
+        background-color: yellow;
+      }
+      .abwesend {
+        color: red;
+      }
+      .fragen {
+        color: grey;
+      }
   }
   .person {
   	border: 0.5px solid black
-  }
-  .verfügbar {
-  	color: green;
-  }
-  .abwesend {
-  	color: red;
-  }
-  .fragen {
-  	color: grey;
   }
 }

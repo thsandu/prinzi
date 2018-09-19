@@ -2,8 +2,14 @@
   <%= "Name: #{mitarbeiter.name}" %></div>
 <% verfugbarkeiten.each do |verf| %>
   <div class="verfügbarkeit">
-    <div class="verfügbar"><%= verf[:verfügbar] %></div>
-    <div class="abwesend"><%= verf[:abwesend] %></div>
-    <div class="fragen"><%= verf[:fragen] %></div>
-  </div>
-<% end %>
+    <% if verf[:potential] %>
+      <% then %>
+      <div class="verfügbar_buchung">
+      <% else %>
+        <div class="verfügbar">
+        <% end %>
+        <%= print_verfugbar_zeiten verf[:verfügbar] %></div>
+      <div class="abwesend"><%= print_verfugbar_zeiten verf[:abwesend] %></div>
+      <div class="fragen"><%= print_verfugbar_zeiten verf[:fragen] %></div>
+    </div>
+  <% end %>
