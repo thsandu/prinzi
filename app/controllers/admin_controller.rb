@@ -3,8 +3,14 @@ class AdminController < ApplicationController
   before_action :check_admin
 
   def index
+
     @kal_woche = Time.now.to_date.cweek
     @kal_woche = admin_params[:woche] unless admin_params[:woche].nil?
+
+    buch_start = session[:buchungs_start]
+    buch_ende = session[:buchungs_ende]
+
+    logger.debug "buchung start: #{buch_start}, buch_ende: #{buch_ende}"
 
     @verfugbarkeiten_anzahl = Verfugbarkeit.count
     @user_anzahl = User.count
@@ -17,8 +23,6 @@ class AdminController < ApplicationController
       @wochen_datums.each do |day|
         morgen = Time.mktime(day.year, day.month, day.day)
         nacht = Time.mktime(day.year, day.month, day.day, 23, 59)
-        buch_start = Time.mktime(day.year, day.month, day.day, 12)
-        buch_ende = Time.mktime(day.year, day.month, day.day, 16)
 
         verfugbarkeiten = user.berechne_verf_am_tag(morgen, nacht, buch_start, buch_ende)
         @wochen_auslastung[user].push verfugbarkeiten
@@ -35,13 +39,17 @@ class AdminController < ApplicationController
     buchungs_datum = buchungs_anfrage[:datum]
     buchungs_start = buchungs_anfrage[:startzeit]
     buchungs_dauer = buchungs_anfrage[:dauer]
-    buchungs_ende = Time.mktime(buchungs_start.year, buchungs_start.month, buchungs_start.day, buchungs_start.hour + buchungs_dauer)
+    buchungs_anfang = Time.mktime(buchungs_start[:year], buchungs_start[:month], buchungs_start[:day], buchungs_start[:hour], buchungs_start[:minute])
+    buchungs_ende = Time.mktime(buchungs_start[:year], buchungs_start[:month], buchungs_start[:day], buchungs_start[:hour].to_i + buchungs_dauer.to_i)
 
-
+    session[:buchungs_start] = buchungs_anfang
+    session[:buchungs_ende] = buchungs_ende
+    redirect_to admin_url, action: "get", notice: "Frei zwischen #{buchungs_anfang} und #{buchungs_ende}? Ich sehe GELB"
   end
 
   def admin_params
-    params.permit(:woche, buchungs_anfrage: [:datum, :startzeit, :dauer])
+    params.permit!
+    #params.permit(:woche, :buchungs_start, :buchungs_ende, :buchungs_anfrage => {})
   end
 
   protected

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'admin' => 'admin#index'
+  get 'zeige_moeg' => 'admin#zeige_moeglichkeiten'
   controller :sessions do
     get 'login' => :new
     post 'login' => :create
