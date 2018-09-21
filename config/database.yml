@@ -28,6 +28,6 @@ test:
 production:
   <<: *default
   #database: db/production.sqlite3
-  database: prinzi_prod
-  username: prinzi
-  password: <%= ENV['prinziPrinzi'] %>
+  database: d885j009jhm8b7
+  username: innwgcckfqklyi
+  password: <%= ENV['aaef45714f95f523812979765b3f30769c3e36f06c1d5ff926011e73c2d0d4af'] %>
