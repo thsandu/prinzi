@@ -26,7 +26,8 @@ KW <%= @kal_woche %> ist: <%= week_dates(@kal_woche) %>
 <%= form_tag("/zeige_moeg", method: "get") do %>
   <div class="field">
     <%= label_tag :startzeit %>
-    <%= select_datetime DateTime.now, prefix: "buchungs_anfrage[startzeit]" %>
+    <%= select_date Date.current, prefix: "buchungs_anfrage[startdatum]", order: [:day, :month] %>
+    <%= select_hour prefix: "buchungs_anfrage[startdatum]" %>
   </div>
   <div class="field">
     <%= label_tag :dauer %>

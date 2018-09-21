@@ -36,11 +36,11 @@ class AdminController < ApplicationController
   # get admin/zeige_moeg
   def zeige_moeglichkeiten
     buchungs_anfrage = admin_params[:buchungs_anfrage]
-    buchungs_datum = buchungs_anfrage[:datum]
-    buchungs_start = buchungs_anfrage[:startzeit]
-    buchungs_dauer = buchungs_anfrage[:dauer]
-    buchungs_anfang = Time.mktime(buchungs_start[:year], buchungs_start[:month], buchungs_start[:day], buchungs_start[:hour], buchungs_start[:minute])
-    buchungs_ende = Time.mktime(buchungs_start[:year], buchungs_start[:month], buchungs_start[:day], buchungs_start[:hour].to_i + buchungs_dauer.to_i)
+    buchungs_start_datum = buchungs_anfrage[:startdatum]
+    buchungs_start_stunde = admin_params[:date]
+    buchungs_dauer = buchungs_anfrage[:startstunde]
+    buchungs_anfang = Time.mktime(buchungs_start_datum[:year], buchungs_start_datum[:month], buchungs_start_datum[:day], buchungs_start_stunde[:hour])
+    buchungs_ende = Time.mktime(buchungs_start_datum[:year], buchungs_start_datum[:month], buchungs_start_datum[:day], buchungs_start_stunde[:hour].to_i + buchungs_dauer.to_i)
 
     session[:buchungs_start] = buchungs_anfang
     session[:buchungs_ende] = buchungs_ende
