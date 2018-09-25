@@ -1,6 +1,24 @@
 class PrinziCalController < ApplicationController
-  config.time_zone = 'Europe/Bucharest'
+  include DatumHelper
+
   def index
+
+    @kal_woche = Time.now.to_date.cweek
+    @kal_woche = succ_param[:woche] unless succ_param[:woche].nil?
+    @wochen_datums = finde_mo_bis_so_datum(@kal_woche)
+    @wochen_auslastung = {}
+
+    user = User.find session[:user_id]
+
+    @wochen_auslastung[user] = []
+    @wochen_datums.each do |day|
+      morgen = Time.mktime(day.year, day.month, day.day)
+      nacht = Time.mktime(day.year, day.month, day.day, 23, 59)
+
+      verfugbarkeiten = user.berechne_verf_am_tag(morgen, nacht)
+      @wochen_auslastung[user].push verfugbarkeiten
+    end
+
     verfugbarkeit_with_gid = Verfugbarkeit.where user_id: session[:user_id]
 
     logger.debug "next_events sind: #{verfugbarkeit_with_gid}, size #{verfugbarkeit_with_gid.size}"
@@ -40,7 +58,7 @@ class PrinziCalController < ApplicationController
   def succ_param
     #params.require(:buchung).permit!
     #params
-    params.permit(verfugbarkeit: {})
+    params.permit(:woche, verfugbarkeit: {})
   end
 
 end

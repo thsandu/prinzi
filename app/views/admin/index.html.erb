@@ -1,12 +1,9 @@
-<h1>Willkommen lieber Admin</h1>
-Uhrzeit: <%= Time.now %>
-Anzahl Verfügbarkeiten: <%= @verfugbarkeiten_anzahl %>
-Anzahl User: <%= @user_anzahl %>
-KW <%= @kal_woche %> ist: <%= week_dates(@kal_woche) %>
-<p>Find me in app/views/admin/index.html.erb</p>
+<h1>Backoffice Deine Prinzession Mitarbeiterübersicht</h1>
 <% if notice %>
   <p id = "notice"><%= notice %></p>
 <% end %>
+<p>Anzahl User: <%= @user_anzahl %></P>
+<p>KW <%= @kal_woche %> ist: <%= week_dates(@kal_woche) %></P>
 <div class="adminwoche">
   <div class="navi_zurück"><%= link_to '<< Vorherige Woche', admin_path(woche: "#{@kal_woche.to_i - 1}"), method: :get %></div>
   <div class="navi_vor"><%= link_to 'Nächste Woche >>', admin_path(woche: "#{@kal_woche.to_i + 1}"), method: :get %></div>

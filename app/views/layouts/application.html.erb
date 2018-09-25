@@ -16,14 +16,15 @@
         <% end %>
         <% if @user && @user.is_admin? %>
           <ul>
-            <li><%= link_to users_path, method: :get %></li>
-            <li><%= link_to verfugbarkeits_path, method: :get %></li>
+            <li><%= link_to "Userverwaltung", users_path, method: :get %></li>
+            <li><%= link_to "Verfügbarkeiten Verwaltung", verfugbarkeits_path, method: :get %></li>
+            <li><%= link_to "Buchungen Verwaltung", buchungs_path, method: :get %></li>
           </ul>
         <% end %>
         <ul>
           <li><a href="http://www....">Home</a></li>
           <li><a href="http://www..../faq">Questions</a></li>
-          <li><a href="http://www..../news">News</a></li>
+          <li><%= link_to "Glizzi", "https://www.glizzi.com", target: "_blank" %></li>
           <li><a href="http://www..../contact">Contact</a></li>
         </ul>
         <p>

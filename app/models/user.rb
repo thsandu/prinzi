@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_secure_password
 
   def is_admin?
-    @typ == 'Administrator'
+    typ == 'Administrator'
   end
 
   # hash mit verfügbarkeiten Intervallen.
