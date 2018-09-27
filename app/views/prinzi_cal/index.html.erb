@@ -15,17 +15,32 @@
   <div class="titel">Sa <%= @wochen_datums[5]%></div>
   <div class="titel">So <%= @wochen_datums[6]%></div>
   <%= render partial: "verf_user", locals: {verfugbarkeiten: @wochen_auslastung[@user]} %>
-  <div class="aktionen">Aktionen</div>
-  <% (1..7).each do |variable| %>
+  <div class="verfügbarkeit">Aktionen</div>
+  <% @wochen_datums.each do |tag| %>
     <div class="verfügbarkeit">
-      <div><%= submit_tag "Verfügbar ganzer Tag" %>  </div>
-      <div><%= submit_tag "Abwesend ganzer Tag" %>  </div>
-      <div><%= submit_tag "Frage ganzer Tag" %>  </div>
+      <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
+        <%= hidden_field_tag("verfugbarkeit[status]", "verfügbar") %>
+        <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
+        <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
+        <%= submit_tag "Verf. ganzer Tag" %>
+      <% end %>
+      <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
+        <%= hidden_field_tag("verfugbarkeit[status]", "abwesend") %>
+        <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
+        <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
+        <%= submit_tag "Abw. ganzer Tag" %>
+      <% end %>
+      <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
+        <%= hidden_field_tag("verfugbarkeit[status]", "fragen") %>
+        <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
+        <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
+        <%= submit_tag "Fr. ganzer Tag" %>
+      <% end %>
     </div>
   <% end %>
-  <div>Verfügbarkeiten</div>
 </div>
-<table width="80%" height="90%">
+<div>Verfügbarkeiten</div>
+<table>
   <tbody>
     <tr>
       <td><%= button_to 'Erzeuge Verfügbarkeit', new_buchung_prinzi_path, action: "create", method: :get %></td>

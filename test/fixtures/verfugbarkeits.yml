@@ -4,12 +4,14 @@ one:
   status: fragen
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 13:53:35
+  user_id: 42
 
 two:
   status: verfügbar
   start: 2018-07-07 16:53:35
   ende: 2018-07-07 17:53:35
   gcal_id: 6s00hbpqq865cci7k1rndra7vo
+  user_id: 42
 
 jutta_1:
   status: verfügbar
