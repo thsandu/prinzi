@@ -38,7 +38,7 @@ class AdminController < ApplicationController
     buchungs_anfrage = admin_params[:buchungs_anfrage]
     buchungs_start_datum = buchungs_anfrage[:startdatum]
     buchungs_start_stunde = admin_params[:date]
-    buchungs_dauer = buchungs_anfrage[:startstunde]
+    buchungs_dauer = buchungs_anfrage[:dauer]
     buchungs_anfang = Time.mktime(buchungs_start_datum[:year], buchungs_start_datum[:month], buchungs_start_datum[:day], buchungs_start_stunde[:hour])
     buchungs_ende = Time.mktime(buchungs_start_datum[:year], buchungs_start_datum[:month], buchungs_start_datum[:day], buchungs_start_stunde[:hour].to_i + buchungs_dauer.to_i)
 
