@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_23_110554) do
+ActiveRecord::Schema.define(version: 2018_09_27_091212) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "buchungs", force: :cascade do |t|
     t.string "status", null: false
@@ -35,11 +38,12 @@ ActiveRecord::Schema.define(version: 2018_08_23_110554) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "verfügbar", null: false
-    t.datetime "start", default: "2018-09-17 04:19:30", null: false
-    t.datetime "ende", default: "2018-09-17 04:19:30", null: false
-    t.integer "user_id"
+    t.datetime "start", null: false
+    t.datetime "ende", null: false
+    t.bigint "user_id"
     t.string "gcal_id"
     t.index ["user_id"], name: "index_verfugbarkeits_on_user_id"
   end
 
+  add_foreign_key "verfugbarkeits", "users"
 end

@@ -37,6 +37,15 @@ div.ereignis_frame {
   .verfügbarkeit {
   	border: 0.5px solid black;
   	text-align: center;
+      .verfügbar {
+        background-color: green;
+      }
+      .abwesend {
+        background-color: red;
+      }
+      .fragen {
+        background-color: grey;
+      }
   }
   .uhrzeit {
   	border: 0.5px solid black

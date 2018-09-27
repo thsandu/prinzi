@@ -28,4 +28,16 @@ module PrinziCalHelper
     zwischen
   end
 
+  def bestimme_anzeige_format(anzeige)
+    case anzeige
+    when "A"
+      return "abwesend"
+    when "V"
+      return "verfügbar"
+    when "F"
+      return "fragen"
+    end
+
+  end
+
 end

@@ -1,6 +1,9 @@
 <% (9..19).each do |zeit| %>
   <div class="uhrzeit"><%= zeit %>:00</div>
   <% (0..6).each do |tag_index| %>
-    <div class="verfügbarkeit"><%= bestimme_verf_anzeige(zeit, verfugbarkeiten[tag_index]) %></div>
+    <% anzeige = bestimme_verf_anzeige(zeit, verfugbarkeiten[tag_index]) %>
+    <div class="verfügbarkeit">
+      <div class=<%="#{ bestimme_anzeige_format(anzeige)}"%>><%= anzeige %></div>
+    </div>
   <% end %>
 <% end %>
