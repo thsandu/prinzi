@@ -15,6 +15,15 @@
   <div class="titel">Sa <%= @wochen_datums[5]%></div>
   <div class="titel">So <%= @wochen_datums[6]%></div>
   <%= render partial: "verf_user", locals: {verfugbarkeiten: @wochen_auslastung[@user]} %>
+  <div class="aktionen">Aktionen</div>
+  <% (1..7).each do |variable| %>
+    <div class="verfügbarkeit">
+      <div><%= submit_tag "Verfügbar ganzer Tag" %>  </div>
+      <div><%= submit_tag "Abwesend ganzer Tag" %>  </div>
+      <div><%= submit_tag "Frage ganzer Tag" %>  </div>
+    </div>
+  <% end %>
+  <div>Verfügbarkeiten</div>
 </div>
 <table width="80%" height="90%">
   <tbody>

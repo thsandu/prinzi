@@ -16,6 +16,7 @@
         <% end %>
         <% if @user && @user.is_admin? %>
           <ul>
+            <li><%= link_to "Mitarbeiterübersicht", admin_path, method: :get %></li>
             <li><%= link_to "Userverwaltung", users_path, method: :get %></li>
             <li><%= link_to "Verfügbarkeiten Verwaltung", verfugbarkeits_path, method: :get %></li>
             <li><%= link_to "Buchungen Verwaltung", buchungs_path, method: :get %></li>
