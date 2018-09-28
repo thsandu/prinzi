@@ -2,7 +2,6 @@ class PrinziCalController < ApplicationController
   include DatumHelper
 
   def index
-
     @kal_woche = Time.now.to_date.cweek
     @kal_woche = succ_param[:woche] unless succ_param[:woche].nil?
     @wochen_datums = finde_mo_bis_so_datum(@kal_woche)
@@ -19,7 +18,8 @@ class PrinziCalController < ApplicationController
       @wochen_auslastung[user].push verfugbarkeiten
     end
 
-    verfugbarkeit_with_gid = Verfugbarkeit.where user_id: session[:user_id]
+    ende_der_woche = @wochen_datums.last
+    verfugbarkeit_with_gid = Verfugbarkeit.where(user_id: session[:user_id], start: @wochen_datums.first..Time.mktime(ende_der_woche.year, ende_der_woche.month, ende_der_woche.day, 23, 59))
 
     logger.debug "next_events sind: #{verfugbarkeit_with_gid}, size #{verfugbarkeit_with_gid.size}"
 
@@ -54,11 +54,26 @@ class PrinziCalController < ApplicationController
     end
   end
 
+  # DELETE /prinzi_cal/destroy
+  def destroy
+
+    logger.debug "Destroy verf_ids: #{succ_param[:verf_id]}, woche ist: #{succ_param[:woche]}"
+    verf_to_delete = Verfugbarkeit.where(id: succ_param[:verf_id])
+
+    verf_to_delete.each {|verf| verf.destroy}
+
+    redirect_to contoller: 'prinzi_cal', action: 'index', woche: succ_param[:woche], notice: "#{verf_to_delete.size} Verfügbarkeiten gelöscht."
+  end
+
   private
   def succ_param
     #params.require(:buchung).permit!
     #params
-    params.permit(:woche, verfugbarkeit: {})
+    params.permit(:woche, verf_id: [], verfugbarkeit: {})
+  end
+
+  def finde_verf_der_woche(kw, user)
+
   end
 
 end

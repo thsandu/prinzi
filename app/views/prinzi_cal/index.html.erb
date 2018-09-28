@@ -14,44 +14,32 @@
   <div class="titel">Fr <%= @wochen_datums[4]%></div>
   <div class="titel">Sa <%= @wochen_datums[5]%></div>
   <div class="titel">So <%= @wochen_datums[6]%></div>
+  <!-- erzeugt die verfügbarkeits Zellen für jeden Tag-->
   <%= render partial: "verf_user", locals: {verfugbarkeiten: @wochen_auslastung[@user]} %>
   <div class="verfügbarkeit">Aktionen</div>
   <% @wochen_datums.each do |tag| %>
-    <div class="verfügbarkeit">
-      <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
-        <%= hidden_field_tag("verfugbarkeit[status]", "verfügbar") %>
-        <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
-        <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
-        <%= submit_tag "Verf. ganzer Tag" %>
-      <% end %>
-      <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
-        <%= hidden_field_tag("verfugbarkeit[status]", "abwesend") %>
-        <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
-        <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
-        <%= submit_tag "Abw. ganzer Tag" %>
-      <% end %>
-      <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
-        <%= hidden_field_tag("verfugbarkeit[status]", "fragen") %>
-        <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
-        <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
-        <%= submit_tag "Fr. ganzer Tag" %>
-      <% end %>
-    </div>
+    <!-- Erzeugt die Aktionen für jede Spalte-->
+    <%= render partial: "aktionen_liste", locals: {tag: tag} %>
   <% end %>
 </div>
-<div>Verfügbarkeiten</div>
+<div>Verfügbarkeiten diese Woche</div>
+<%= button_to 'Erzeuge Verfügbarkeit', new_buchung_prinzi_path, action: "create", method: :get %>
 <table>
   <tbody>
     <tr>
-      <td><%= button_to 'Erzeuge Verfügbarkeit', new_buchung_prinzi_path, action: "create", method: :get %></td>
+      <td></td>
     </tr>
     <tr>
       <td>
-        <div class="ereignis_frame">
-          <% @verfugbarkeits.each do |verfugbarkeit| %>
-            <%= render partial: "ereigniss_liste", locals: { verfugbarkeit: verfugbarkeit } %>
-          <% end %>
-        </div>
+        <%= form_tag(controller: "prinzi_cal", action: "destroy", method: :delete) do %>
+          <%= submit_tag("Lösche Auswahl", data: {confirm: "Verfügbarkeiten sicher löschen?"}) %>
+          <%= hidden_field_tag "woche", @kal_woche %>
+          <div class="ereignis_frame">
+            <% @verfugbarkeits.each do |verfugbarkeit| %>
+              <%= render partial: "ereigniss_liste", locals: { verfugbarkeit: verfugbarkeit } %>
+            <% end %>
+          </div>
+        <% end %>
       </td>
       <td></td>
     </tr>

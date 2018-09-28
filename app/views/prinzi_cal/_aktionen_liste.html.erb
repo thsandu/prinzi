@@ -1,0 +1,21 @@
+    
+<div class="verfügbarkeit">
+  <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
+    <%= hidden_field_tag("verfugbarkeit[status]", "verfügbar") %>
+    <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
+    <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
+    <%= submit_tag "Verf. ganzer Tag" %>
+  <% end %>
+  <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
+    <%= hidden_field_tag("verfugbarkeit[status]", "abwesend") %>
+    <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
+    <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
+    <%= submit_tag "Abw. ganzer Tag" %>
+  <% end %>
+  <%= form_tag(controller: "prinzi_cal", action: "create", method: :post) do %>
+    <%= hidden_field_tag("verfugbarkeit[status]", "fragen") %>
+    <%= hidden_field_tag("verfugbarkeit[start]", Time.mktime(tag.year, tag.month, tag.day, 9)) %>
+    <%= hidden_field_tag("verfugbarkeit[ende]", Time.mktime(tag.year, tag.month, tag.day, 19)) %>
+    <%= submit_tag "Fr. ganzer Tag" %>
+  <% end %>
+</div>

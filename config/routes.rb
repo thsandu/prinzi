@@ -27,5 +27,7 @@ Rails.application.routes.draw do
 
   get 'prinzi_cal/new_buchung', to: 'prinzi_cal#new_buchung', as: 'new_buchung_prinzi'
   post 'prinzi_cal/verfugbarkeits', to: 'prinzi_cal#create', as: 'prinzi_verfugbarkeits'
+  delete 'prinzi_cal', to: 'prinzi_cal#destroy', as: 'prinzi_delete'
+  post 'prinzi_cal', to: 'prinzi_cal#destroy', as: 'prinzi_p_delete'
 
 end
