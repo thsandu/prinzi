@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   before_action :check_admin
 
   def index
-
+    logger.debug "woche in index: #{admin_params[:woche]} params: #{params}"
     @kal_woche = Time.now.to_date.cweek
     @kal_woche = admin_params[:woche] unless admin_params[:woche].nil?
 
@@ -44,7 +44,8 @@ class AdminController < ApplicationController
 
     session[:buchungs_start] = buchungs_anfang
     session[:buchungs_ende] = buchungs_ende
-    redirect_to admin_url(woche: session[:woche]), action: "get", notice: "Frei zwischen #{buchungs_anfang} und #{buchungs_ende}? Ich sehe GELB"
+    logger.debug "woche in zeige: #{admin_params[:woche]} params: #{params}"
+    redirect_to admin_url(woche: admin_params[:woche]), action: "get", notice: "Frei zwischen #{buchungs_anfang} und #{buchungs_ende}? Ich sehe GELB"
   end
 
   def admin_params

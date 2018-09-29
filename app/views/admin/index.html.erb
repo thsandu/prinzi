@@ -25,6 +25,7 @@
     <%= label_tag :startzeit %>
     <%= select_date Date.current, prefix: "buchungs_anfrage[startdatum]", order: [:day, :month] %>
     <%= select_hour prefix: "buchungs_anfrage[startdatum]" %>
+    <%= hidden_field_tag "woche", @kal_woche %>
   </div>
   <div class="field">
     <%= label_tag :dauer %>
