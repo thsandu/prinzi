@@ -1,4 +1,5 @@
 class Verfugbarkeit < ApplicationRecord
+  enum status: [:verfügbar, :abwesend, :fragen]
 
   #status:
   # abwesend = mitarbeiter hat da keine Zeit
@@ -45,19 +46,19 @@ class Verfugbarkeit < ApplicationRecord
   end
 
   def besetze_zeitraum(start_zeit, ende_zeit)
-    self.status = 'besetzt'
+    self.status = :abwesend
     self.start = start_zeit
     self.ende = ende_zeit
   end
 
   def befreie_zeitraum(start_zeit, ende_zeit)
-    self.status = 'frei'
+    self.status = :verfügbar
     self.start = start_zeit
     self.ende = ende_zeit
   end
 
   def buche_zeitraum(start_zeit, ende_zeit)
-    self.status = 'gebucht'
+    self.status = :fragen
     self.start = start_zeit
     self.ende = ende_zeit
   end

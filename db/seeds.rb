@@ -9,9 +9,9 @@
 require File.expand_path('../seeds/seed_helper', __FILE__)
 
 
-User.create(typ: "Administrator", name: "admin", username: "admin", password_digest: BCrypt::Password.create('admin'))
-paula = User.create(typ: "Mitarbeiter", name: "Paula", username: "paula", password_digest: BCrypt::Password.create('paula'))
-sophia = User.create(typ: "Mitarbeiter", name: "Sophia", username: "sophia", password_digest: BCrypt::Password.create('sophia'))
+User.create(typ: :Administrator, name: "admin", username: "admin", password_digest: BCrypt::Password.create('admin'))
+paula = User.create(typ: :Mitarbeiter, name: "Paula", username: "paula", password_digest: BCrypt::Password.create('paula'))
+sophia = User.create(typ: :Mitarbeiter, name: "Sophia", username: "sophia", password_digest: BCrypt::Password.create('sophia'))
 
 
 seed = 115032730400174366788466674494640623225

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_27_091212) do
+ActiveRecord::Schema.define(version: 2018_09_29_104302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_091212) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "typ"
+    t.integer "typ", null: false
     t.string "name"
     t.string "username"
     t.string "password_digest"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_091212) do
   create_table "verfugbarkeits", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status", default: "verfügbar", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "start", null: false
     t.datetime "ende", null: false
     t.bigint "user_id"

@@ -16,7 +16,7 @@ class AdminController < ApplicationController
     @user_anzahl = User.count
     @wochen_auslastung = {}
     @wochen_datums = finde_mo_bis_so_datum(@kal_woche)
-    @alle_user = User.where(typ: "Mitarbeiter").order(:username)
+    @alle_user = User.where(typ: :Mitarbeiter).order(:username)
 
     @alle_user.each do |user|
       @wochen_auslastung[user] = []

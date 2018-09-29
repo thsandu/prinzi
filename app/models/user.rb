@@ -1,9 +1,10 @@
 class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   has_secure_password
+  enum typ: [:Administrator, :Mitarbeiter]
 
   def is_admin?
-    typ == 'Administrator'
+    self.Administrator?
   end
 
   # hash mit verfügbarkeiten Intervallen.

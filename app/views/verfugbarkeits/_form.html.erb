@@ -11,7 +11,7 @@
   <% end %>
   <div class="field">
     <%= form.label :status %>
-    <%= form.text_field :status %>
+    <%= form.select :status, Verfugbarkeit.statuses.keys %>
   </div>
   <div class="field">
     <%= form.label :start %>

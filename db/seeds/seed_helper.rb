@@ -79,9 +79,9 @@ module SeedHelper
       frage_start = zeiten["frage_start"]
       frage_ende = zeiten["frage_ende"]
 
-      verf1 = Verfugbarkeit.create(status: "verfügbar", user_id: akt_user.id, start: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, verf_start[index]), ende: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, verf_ende[index]))
-      verf2 = Verfugbarkeit.create(status: "abwesend", user_id: akt_user.id, start: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, besch_start[index]), ende: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, besch_ende[index]))
-      verf3 = Verfugbarkeit.create(status: "fragen", user_id: akt_user.id, start: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, frage_start[index]), ende: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, frage_ende[index]))
+      verf1 = Verfugbarkeit.create(status: :verfügbar, user_id: akt_user.id, start: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, verf_start[index]), ende: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, verf_ende[index]))
+      verf2 = Verfugbarkeit.create(status: :abwesend, user_id: akt_user.id, start: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, besch_start[index]), ende: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, besch_ende[index]))
+      verf3 = Verfugbarkeit.create(status: :fragen, user_id: akt_user.id, start: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, frage_start[index]), ende: Time.mktime(akt_tag.year, akt_tag.month, akt_tag.day, frage_ende[index]))
     end
 
   end

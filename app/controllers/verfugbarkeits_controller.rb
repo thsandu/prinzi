@@ -5,7 +5,7 @@ class VerfugbarkeitsController < ApplicationController
   # GET /verfugbarkeits.json
   def index
     @verfugbarkeits = Verfugbarkeit.all
-    @alle_user = User.where(typ: "Mitarbeiter").order(:username)
+    @alle_user = User.where(typ: :Mitarbeiter).order(:username)
   end
 
   # GET /verfugbarkeits/1

@@ -31,7 +31,7 @@ class VerfugbarkeitTest < ActiveSupport::TestCase
     assert_equal 00, start_here.min
     assert_equal 12, ende_here.hour
     assert_equal 00, ende_here.min
-    assert_equal 'frei', buchung.status
+    assert_equal 'verfügbar', buchung.status
   end
 
   def test_create_besetzt_Verfugbarkeit
@@ -45,7 +45,7 @@ class VerfugbarkeitTest < ActiveSupport::TestCase
 
     assert_equal '11:00', start_here.strftime("%H:%M")
     assert_equal '13:00', ende_here.strftime("%H:%M")
-    assert_equal 'besetzt', buchung.status
+    assert_equal 'abwesend', buchung.status
   end
 
   def test_Verfugbarkeit_one_verfugbarkeit_frei
@@ -55,7 +55,7 @@ class VerfugbarkeitTest < ActiveSupport::TestCase
     ende_here = verf.ende.in_time_zone('Europe/Bucharest')
     assert_equal '10:30', start_here.strftime("%H:%M")
     assert_equal '12:30', ende_here.strftime("%H:%M")
-    assert_equal 'frei', verf.status
+    assert_equal "verfügbar", verf.status
   end
 
   def test_Verfugbarkeit_two_verfugbarkeit_frei

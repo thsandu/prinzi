@@ -5,16 +5,17 @@ module PrinziCalHelper
   end
 
   def bestimme_verf_anzeige(stunde, verfugbarkeiten)
+    anzeige = ''
     verfugbarkeiten[:verfügbar].each do |verf_zeit|
-      return 'V' if ist_stunde_zwischen?(stunde, verf_zeit)
+      anzeige = 'V' if ist_stunde_zwischen?(stunde, verf_zeit)
     end
     verfugbarkeiten[:abwesend].each do |verf_zeit|
-      return 'A' if ist_stunde_zwischen?(stunde, verf_zeit)
+      anzeige = 'A' if ist_stunde_zwischen?(stunde, verf_zeit)
     end
     verfugbarkeiten[:fragen].each do |verf_zeit|
-      return 'F' if ist_stunde_zwischen?(stunde, verf_zeit)
+      anzeige = 'F' if ist_stunde_zwischen?(stunde, verf_zeit)
     end
-
+    anzeige
   end
 
   def ist_stunde_zwischen?(stunde, verfugbarkeit)
@@ -29,15 +30,16 @@ module PrinziCalHelper
   end
 
   def bestimme_anzeige_format(anzeige)
+    mapping = ''
     case anzeige
     when "A"
-      return "abwesend"
+      mapping = "abwesend"
     when "V"
-      return "verfügbar"
+      mapping = "verfügbar"
     when "F"
-      return "fragen"
+      mapping = "fragen"
     end
-
+    mapping
   end
 
 end

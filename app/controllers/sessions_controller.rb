@@ -7,11 +7,11 @@ class SessionsController < ApplicationController
     user = User.find_by(username: params[:username])
     if user and user.authenticate(params[:password])
       session[:user_id] = user.id
-      case user.typ
-      when 'Administrator'
+      if user.Administrator?
+      then
         session[:admin] = true
         redirect_to admin_url
-      when 'Mitarbeiter'
+      else
         session[:admin] = false
         redirect_to prinzi_cal_index_url
       end
