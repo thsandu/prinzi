@@ -44,7 +44,7 @@ class AdminController < ApplicationController
 
     session[:buchungs_start] = buchungs_anfang
     session[:buchungs_ende] = buchungs_ende
-    redirect_to admin_url, action: "get", notice: "Frei zwischen #{buchungs_anfang} und #{buchungs_ende}? Ich sehe GELB"
+    redirect_to admin_url(woche: session[:woche]), action: "get", notice: "Frei zwischen #{buchungs_anfang} und #{buchungs_ende}? Ich sehe GELB"
   end
 
   def admin_params
