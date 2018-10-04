@@ -23,7 +23,7 @@ class PrinziCalController < ApplicationController
 
     logger.debug "next_events sind: #{verfugbarkeit_with_gid}, size #{verfugbarkeit_with_gid.size}"
 
-    @verfugbarkeits = verfugbarkeit_with_gid.to_a
+    @verfugbarkeits = verfugbarkeit_with_gid.order(:start).to_a
   end
 
   # GET /prinzi_cal/new_buchung
@@ -40,7 +40,10 @@ class PrinziCalController < ApplicationController
     monat = verf_params['start(2i)']
     tag = verf_params['start(3i)']
 
+    ende_verf = Time.mktime(jahr, monat, tag, verf_params[:ende])
+
     @verfugbarkeit = Verfugbarkeit.new(succ_param[:verfugbarkeit])
+    @verfugbarkeit.ende = ende_verf
     @verfugbarkeit.user_id = session[:user_id]
 
     respond_to do |format|

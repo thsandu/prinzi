@@ -16,11 +16,11 @@
   </div>
   <div class="field">
     <%= form.label :start %>
-    <%= form.datetime_select :start %>
+    <%= form.datetime_select :start, discard_minute: true %>
   </div>
   <div class="field">
     <%= form.label :ende %>
-    <%= form.datetime_select :ende %>
+    <%= form.datetime_select :ende, discard_minute: true %>
   </div>
   <div class="actions">
     <%= form.submit %>
