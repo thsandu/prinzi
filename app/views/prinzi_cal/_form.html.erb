@@ -1,4 +1,5 @@
 <%= form_with(model: verfugbarkeit, url: prinzi_verfugbarkeits_url, local: true) do |form| %>
+  <%= hidden_field_tag "woche", kal_woche %>
   <% if verfugbarkeit.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(verfugbarkeit.errors.count, "error") %> prohibited this verfugbarkeit from being saved:</h2>

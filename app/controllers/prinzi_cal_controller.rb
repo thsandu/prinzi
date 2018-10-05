@@ -28,6 +28,7 @@ class PrinziCalController < ApplicationController
 
   # GET /prinzi_cal/new_buchung
   def new_buchung
+    @kal_woche = succ_param[:woche]
     @verfugbarkeit = Verfugbarkeit.new
   end
 
@@ -58,13 +59,12 @@ class PrinziCalController < ApplicationController
     @verfugbarkeit.ende = ende_verf
 
     @verfugbarkeit.user_id = session[:user_id]
-
     respond_to do |format|
-      if @verfugbarkeit.save
-        format.html { redirect_to @verfugbarkeit, notice: 'Verfügbarkeit was successfully created with cal controller. Link: #{result.html_link}' }
+      if @verfugbarkeit.anlegbar? && @verfugbarkeit.save
+        format.html { redirect_to prinzi_url(woche: succ_param[:woche]), notice: 'Verfügbarkeit erfolgreich angelegt' }
         format.json { render :show, status: :created, location: @verfugbarkeit }
       else
-        format.html { render :new }
+        format.html { redirect_to prinzi_url(woche: succ_param[:woche]), notice: 'Verfügbarkeit konnte nicht angelegt werden!!!'}
         format.json { render json: @verfugbarkeits.errors, status: :unprocessable_entity }
       end
     end

@@ -23,7 +23,7 @@
   <% end %>
 </div>
 <div>Verfügbarkeiten diese Woche</div>
-<%= button_to 'Erzeuge Verfügbarkeit', new_buchung_prinzi_path, action: "create", method: :get %>
+<%= button_to 'Erzeuge Verfügbarkeit', new_buchung_prinzi_url, method: :get, params: {woche: @kal_woche} %>
 <table>
   <tbody>
     <tr>

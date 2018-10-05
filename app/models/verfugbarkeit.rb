@@ -6,6 +6,20 @@ class Verfugbarkeit < ApplicationRecord
   # verfügbar = mitarbeiter hat zeit, kann gebucht werden
   # fragen = mitarbeiter weiss nicht genau, frag mal nach
 
+  def anlegbar?
+    start_tag = Time.mktime(self.start.year, self.start.month, self.start.day, 0, 0)
+    ende_tag = Time.mktime(self.start.year, self.start.month, self.start.day, 23, 59)
+    verfugbarkeiten = Verfugbarkeit.where(user_id: self.user_id, start: start_tag..ende_tag)
+
+    verfugbarkeiten.each do |verf|
+      if ueberschneidet_sich?(verf.start, verf.ende)
+        logger.debug "Überschneidung von #{self.start} - #{self.ende} mit #{verf}: #{verf.start} - #{verf.ende}"
+        return false
+      end
+    end
+    true
+  end
+
   def erzeuge_verfugbarkeit_frei(start_zeit, ende_zeit)
     if(buchung_moeglich?(start_zeit, ende_zeit)) then
       verfugbarkeit = Verfugbarkeit.new
@@ -34,14 +48,6 @@ class Verfugbarkeit < ApplicationRecord
   end
 
   def buchung_moeglich?(start_zeit, ende_zeit)
-    # select all Verfügbarkeiten des aktuellen Tages und Users. Später
-    # self.buchungs.each do |buchung|
-    #   if buchung.ueberschneidet_sich?(start_zeit, ende_zeit)
-    #     puts "Buchung zu dem Zeitpunkt #{start_zeit} - #{ende_zeit} bereits existent"
-    #     resolve_buchungen!(buchung, start_zeit, ende_zeit)
-    #     buchung.save!
-    #   end
-    # end
     true
   end
 
@@ -106,13 +112,13 @@ class Verfugbarkeit < ApplicationRecord
     result=:keine
 
     case
-    when ende_zeit.between?(self.start, self.ende)
+    when ende_zeit.between?(self.start + 1, self.ende)
       #nur ende zeitpunkt ist in der Buchung enthalten
       result = :ende
-    when start_zeit.between?(self.start, self.ende)
+    when start_zeit.between?(self.start + 1, self.ende)
       #nur start zeitpunkt ist in der Buchung enthalten
       result = :start
-    when ende_zeit.between?(self.start, self.ende) && start_zeit.between?(self.start, self.ende)
+    when ende_zeit.between?(self.start + 1, self.ende) && start_zeit.between?(self.start + 1, self.ende)
       #start und ende sind in der Buchung enthalten - also voll enthalten
       result = :enthalten
     end
