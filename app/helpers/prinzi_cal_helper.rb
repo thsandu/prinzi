@@ -23,7 +23,7 @@ module PrinziCalHelper
     anfang = pattern_stunden.match(verfugbarkeit)[1]
     ende = pattern_stunden.match(verfugbarkeit)[2]
 
-    range = (anfang.to_i..ende.to_i)
+    range = (anfang.to_i...ende.to_i)
     zwischen = range.cover?(stunde.to_i)
 
     zwischen

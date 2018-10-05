@@ -48,12 +48,13 @@ class PrinziCalController < ApplicationController
     start = verf_params[:start]
     # Fall für Anlage von Verfügbarkeiten ohne Angabe des genauen Ende Datums
     if(start.nil?) then
-      start = Time.mktime(jahr, monat, tag, stunde)
+      start = Time.mktime(jahr, monat, tag, stunde, minuten)
     else
       start = Time.parse(start)
     end
 
     ende_verf = Time.mktime(start.year, start.month, start.day, ende)
+    @verfugbarkeit.start = start
     @verfugbarkeit.ende = ende_verf
 
     @verfugbarkeit.user_id = session[:user_id]
