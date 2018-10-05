@@ -4,8 +4,8 @@ module SeedHelper
     result = {}
 
     random = Random.new seed
-    range_start = 9..12
-    range_ende = 13..18
+    range_start = 9..13
+    range_ende = 13..19
 
     frei_start = []
     frei_ende = []
