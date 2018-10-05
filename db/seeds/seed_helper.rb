@@ -4,8 +4,8 @@ module SeedHelper
     result = {}
 
     random = Random.new seed
-    range_start = 9..13
-    range_ende = 13..19
+    range_start = 9..12
+    range_ende = 13...20
 
     frei_start = []
     frei_ende = []
@@ -16,7 +16,7 @@ module SeedHelper
 
     7.times{|i| frei_start.push random.rand(range_start)}
     puts "frei_start: #{frei_start}"
-    7.times{|i| frei_ende.push random.rand(range_ende)}
+    7.times{|i| frei_ende.push random.rand(range_ende.begin...range_ende.end-1)}
     puts "frei_ende: #{frei_ende}"
 
 
@@ -28,7 +28,7 @@ module SeedHelper
         besch_ende.push frei_start[i]
       when 9
         besch_start.push frei_ende[i]
-        besch_ende.push random.rand(frei_ende[i]..19)
+        besch_ende.push random.rand(frei_ende[i]+1..range_ende.end)
       end
     end
 
@@ -39,10 +39,10 @@ module SeedHelper
       case besch_ende[i]
       when 10..12
         frage_start.push frei_ende[i]
-        frage_ende.push 19
+        frage_ende.push range_ende.end
       when 13..19
         frage_start.push besch_ende[i]
-        frage_ende.push 19
+        frage_ende.push range_ende.end
       end
     end
 
