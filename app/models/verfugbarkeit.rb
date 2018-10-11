@@ -12,7 +12,7 @@ class Verfugbarkeit < ApplicationRecord
     verfugbarkeiten = Verfugbarkeit.where(user_id: self.user_id, start: start_tag..ende_tag)
 
     verfugbarkeiten.each do |verf|
-      if ueberschneidet_sich?(verf.start, verf.ende)
+      if self.ueberschneidet_sich?(verf.start, verf.ende) || verf.ueberschneidet_sich?(self.start, self.ende)
         logger.debug "Überschneidung von #{self.start} - #{self.ende} mit #{verf}: #{verf.start} - #{verf.ende}"
         return false
       end
@@ -80,6 +80,11 @@ class Verfugbarkeit < ApplicationRecord
     status_eq && start_eq && ende_eq
   end
 
+
+  def ueberschneidet_sich?(start_zeit, ende_zeit)
+    compute_uberschneidung(start_zeit, ende_zeit) != :keine
+  end
+
   private
 
   def buchung_kuerzen!(verfugbarkeit, start_zeit, ende_zeit)
@@ -103,22 +108,20 @@ class Verfugbarkeit < ApplicationRecord
     self.ende = self.ende - kuerzung_sekunden
   end
 
-  def ueberschneidet_sich?(start_zeit, ende_zeit)
-    compute_uberschneidung(start_zeit, ende_zeit) != :keine
-  end
-
   def compute_uberschneidung(start_zeit, ende_zeit)
+    start_zeit = start_zeit + 1
+    ende_zeit = ende_zeit - 1
     #Buchungen überschneiden sich nicht
     result=:keine
 
     case
-    when ende_zeit.between?(self.start + 1, self.ende)
+    when ende_zeit.between?(self.start, self.ende)
       #nur ende zeitpunkt ist in der Buchung enthalten
       result = :ende
-    when start_zeit.between?(self.start + 1, self.ende)
+    when start_zeit.between?(self.start, self.ende)
       #nur start zeitpunkt ist in der Buchung enthalten
       result = :start
-    when ende_zeit.between?(self.start + 1, self.ende) && start_zeit.between?(self.start + 1, self.ende)
+    when ende_zeit.between?(self.start, self.ende) && start_zeit.between?(self.start, self.ende)
       #start und ende sind in der Buchung enthalten - also voll enthalten
       result = :enthalten
     end

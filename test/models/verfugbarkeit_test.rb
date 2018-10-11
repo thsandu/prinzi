@@ -113,5 +113,71 @@ class VerfugbarkeitTest < ActiveSupport::TestCase
     assert_equal Time.mktime(2018, 03, 18, 13, 29), verf2.ende
   end
 
+  test "test_verf_anlegbar" do
+    start = Time.mktime(2018, 10, 11, 13, 00)
+    ende = Time.mktime(2018, 10, 11, 15, 00)
+
+    verf = Verfugbarkeit.new()
+    verf.user_id = 52
+    verf.start = start
+    verf.ende = ende
+    verf.status = 'verfügbar'
+
+    assert verf.anlegbar?, "verfügbarkeit ist nicht anlegbar"
+
+    start = Time.mktime(2018, 10, 11, 17, 00)
+    ende = Time.mktime(2018, 10, 11, 19, 00)
+
+    verf.start = start
+    verf.ende = ende
+
+    assert verf.anlegbar?, "verfügbarkeit ist nicht anlegbar"
+
+  end
+
+  test "test_verf_nicht_anlegbar" do
+    start = Time.mktime(2018, 10, 11, 10, 00)
+    ende = Time.mktime(2018, 10, 11, 13, 00)
+
+    verf = Verfugbarkeit.new()
+    verf.user_id = 52
+    verf.start = start
+    verf.ende = ende
+    verf.status = 'verfügbar'
+    refute verf.anlegbar?, "verfügbarkeit ist anlegbar 10-13"
+
+    start = Time.mktime(2018, 10, 11, 11, 00)
+    ende = Time.mktime(2018, 10, 11, 14, 00)
+
+    start = Time.mktime(2018, 10, 11, 11, 00)
+    ende = Time.mktime(2018, 10, 11, 12, 00)
+
+    verf.start = start
+    verf.ende = ende
+    refute verf.anlegbar?, "verfügbarkeit ist anlegbar 11-12"
+
+    verf.start = start
+    verf.ende = ende
+    refute verf.anlegbar?, "verfügbarkeit ist anlegbar 11-14"
+
+    start = Time.mktime(2018, 10, 11, 9, 00)
+    ende = Time.mktime(2018, 10, 11, 12, 00)
+
+    verf.start = start
+    verf.ende = ende
+    refute verf.anlegbar?, "verfügbarkeit ist anlegbar 9-12"
+
+    start = Time.mktime(2018, 10, 11, 8, 00)
+    ende = Time.mktime(2018, 10, 11, 14, 00)
+
+    verf.start = start
+    verf.ende = ende
+    refute verf.anlegbar?, "verfügbarkeit ist anlegbar 8-14"
+
+    verf.user_id = 42
+    assert verf.anlegbar?, "verfügbarkeit ist nicht anlegbar, obwohl user id anders ist"
+
+  end
+
 
 end

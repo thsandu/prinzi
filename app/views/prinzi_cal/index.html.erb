@@ -19,7 +19,7 @@
   <div class="verfügbarkeit">Aktionen</div>
   <% @wochen_datums.each do |tag| %>
     <!-- Erzeugt die Aktionen für jede Spalte-->
-    <%= render partial: "aktionen_liste", locals: {tag: tag} %>
+    <%= render partial: "aktionen_liste", locals: {tag: tag, woche: @kal_woche} %>
   <% end %>
 </div>
 <div>Verfügbarkeiten diese Woche</div>

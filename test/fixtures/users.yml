@@ -14,3 +14,11 @@ jutta_user:
   password_digest: <%= BCrypt::Password.create('jutta') %>
   email: MyString
   id: 42
+
+paulita:
+  typ: :Mitarbeiter
+  name: Paulita
+  username: paulita
+  password_digest: <%= BCrypt::Password.create('paulita') %>
+  email: MyString
+  id: 52

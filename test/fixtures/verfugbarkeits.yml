@@ -42,3 +42,15 @@ jutta_5:
   start: <%= Time.mktime(2018, 8, 8, 9) %>
   ende: 2018-07-08 19:00:00
   user_id: 42
+
+zehn_dreizehn:
+  status: verfügbar
+  start: <%= Time.mktime(2018, 10, 11, 10) %>
+  ende: <%= Time.mktime(2018, 10, 11, 13) %>
+  user_id: 52
+
+fünfzehn_sechzehn:
+  status: verfügbar
+  start: <%= Time.mktime(2018, 10, 11, 15) %>
+  ende: <%= Time.mktime(2018, 10, 11, 16) %>
+  user_id: 52
