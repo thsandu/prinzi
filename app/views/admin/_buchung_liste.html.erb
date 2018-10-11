@@ -1,0 +1,21 @@
+<div class="ereignisse">
+  <table>
+    <thead>
+      <tr>
+        <th colspan = "2"><%= buchung.status %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          von: <%= buchung.start %> <br/>
+          bis: <%= buchung.ende %> <br/>
+          typ: <%= buchung.typ %> <br/>
+        </td>
+        <td>
+          <%= check_box_tag("buch_id[]", buchung.id) %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

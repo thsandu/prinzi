@@ -35,3 +35,9 @@
     <%= submit_tag "Wer hat Zeit?" %>
   </div>
 <% end %>
+<h3>Buchungen diese Woche</h3>
+<div class="ereignis_frame">
+  <% @buchungs.each do |buchung| %>
+    <%= render partial: "buchung_liste", locals: { buchung: buchung } %>
+  <% end %>
+</div>

@@ -11,19 +11,19 @@
   <% end %>
   <div class="field">
     <%= form.label :typ %>
-    <%= form.text_field :typ %>
+    <%= form.select :typ, Buchung.typs.keys %>
   </div>
   <div class="field">
     <%= form.label :status %>
-    <%= form.text_field :status %>
+    <%= form.select :status, Buchung.statuses.keys %>
   </div>
   <div class="field">
     <%= form.label :start %>
-    <%= form.datetime_select :start %>
+    <%= form.datetime_select :start, start_hour: 9, end_hour: 19, :discard_minute => true %>
   </div>
   <div class="field">
     <%= form.label :ende %>
-    <%= form.datetime_select :ende %>
+    <%= select_hour Time.now, start_hour: 9, end_hour: 20, field_name: :ende, prefix: :buchung  %>
   </div>
   <div class="actions">
     <%= form.submit %>

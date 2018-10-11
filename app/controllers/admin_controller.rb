@@ -29,7 +29,10 @@ class AdminController < ApplicationController
       end
     end
 
-    logger.debug "Wochenauslastung: #{@wochen_auslastung[@alle_user.first]}"
+    ende_der_woche = @wochen_datums.last
+    buchungs_in_woche = Buchung.where(start: @wochen_datums.first..Time.mktime(ende_der_woche.year, ende_der_woche.month, ende_der_woche.day, 23, 59))
+
+    @buchungs = buchungs_in_woche.order(:start).to_a
 
   end
 

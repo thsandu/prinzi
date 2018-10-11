@@ -24,6 +24,23 @@ class BuchungsController < ApplicationController
   # POST /buchungs
   # POST /buchungs.json
   def create
+    buch_params = buchung_params
+
+    jahr = buch_params['start(1i)']
+    monat = buch_params['start(2i)']
+    tag = buch_params['start(3i)']
+    stunde = buch_params['start(4i)']
+    minuten = nil
+    ende_uhrzeit = buch_params['ende']
+
+    start_buchung = Time.mktime(jahr, monat, tag, stunde)
+    ende_buchung = Time.mktime(jahr, monat, tag, ende_uhrzeit)
+
+    @buchung = Buchung.new(buchung_params)
+    @buchung.start = start_buchung
+    @buchung.ende = ende_buchung
+
+
     respond_to do |format|
       if @buchung.save
         format.html { redirect_to @buchung, notice: 'Buchung was successfully created.' }

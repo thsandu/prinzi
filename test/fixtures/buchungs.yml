@@ -1,19 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  status: MyString
-  typ: standard
+  status: angefragt
+  typ: silber
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35
 
 two:
-  status: MyString
-  typ: royale
+  status: bestätigt
+  typ: gold
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35
 
 three:
-  status: gcal_buchung
-  typ: allinclusive
+  status: reserviert
+  typ: premium
   start: 2018-07-07 11:53:35
   ende: 2018-07-07 11:53:35
