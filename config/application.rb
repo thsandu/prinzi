@@ -17,5 +17,6 @@ module Prinzical
     # the framework and any gems in your application.
     config.time_zone = 'Europe/Bucharest'
 
+    config.generators.javascript_engine = :js
   end
 end

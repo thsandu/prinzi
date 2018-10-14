@@ -1,4 +1,7 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+<h1>Buchung</h1>
 <p>
   <strong>Typ:</strong>
   <%= @buchung.typ %>
